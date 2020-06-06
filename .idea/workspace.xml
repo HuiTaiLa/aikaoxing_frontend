@@ -28,7 +28,7 @@
       <file leaf-file-name="ExamManCheckView.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/admin/exam/manmade_exam_check/ExamManCheckView.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
+            <state relative-caret-position="342">
               <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
               <folding>
                 <element signature="n#div#1;n#div#0;n#template#0;n#!!top" />
@@ -37,7 +37,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
@@ -46,10 +46,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/admin/exam/manmade_exam_check/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="login.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/admin/login/account/login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
+            <state relative-caret-position="855">
               <caret line="45" column="49" lean-forward="true" selection-start-line="45" selection-start-column="49" selection-end-line="45" selection-end-column="49" />
             </state>
           </provider>
@@ -218,7 +229,7 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1592" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -235,91 +246,53 @@
     <panes>
       <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="adminFrontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="adminFrontend" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="adminFrontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="adminFrontend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="adminFrontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="adminFrontend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="adminFrontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="adminFrontend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="adminFrontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="adminFrontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="exam" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="adminFrontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="adminFrontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="exam" type="462c0819:PsiDirectoryNode" />
+              <item name="manmade_exam_check" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -333,7 +306,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ExamApp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -555,14 +528,15 @@
       <workItem from="1591142154649" duration="20758000" />
       <workItem from="1591227064802" duration="33105000" />
       <workItem from="1591317338381" duration="6633000" />
+      <workItem from="1591431312981" duration="35000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2117060000" />
+    <option name="totallyTimeSpent" value="2117095000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1592" y="-8" width="1936" height="1096" extended-state="7" />
+    <frame x="1592" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -573,43 +547,43 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="6" weight="0.32969153" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25053534" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="npm" order="3" sideWeight="0.5049505" side_tool="true" weight="0.13688946" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25053534" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.27593583" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4950495" visible="true" weight="0.21908316" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4950495" visible="true" weight="0.22121535" />
       <window_info anchor="right" id="Database" order="8" weight="0.32942432" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3882353" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="5" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39979124" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39979124" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3882353" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3882353" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info id="npm" order="3" sideWeight="0.5049505" side_tool="true" weight="0.13688946" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2855615" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Message" order="0" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4950495" visible="true" weight="0.23614073" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2855615" />
       <window_info id="Image Layers" order="7" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="5" />
@@ -621,7 +595,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="Capture Tool" order="4" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3882353" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" id="Database" order="6" weight="0.32980332" />
       <window_info anchor="right" id="Maven Projects" order="7" weight="0.32969153" />
       <window_info id="Favorites" order="6" side_tool="true" />
@@ -674,27 +648,8 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/before_answer_notice/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="489" column="15" selection-start-line="489" selection-start-column="10" selection-end-line="489" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/before_answer_notice.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="10" column="18" lean-forward="true" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/depts_exam.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/before_answer_notice.js" />
+    <entry file="file://$PROJECT_DIR$/src/router/depts_exam.js" />
     <entry file="file://$PROJECT_DIR$/src/router/exam_add.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="684">
@@ -702,22 +657,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/exam_check.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/exam_history.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/exam_check.js" />
+    <entry file="file://$PROJECT_DIR$/src/router/exam_history.js" />
     <entry file="file://$PROJECT_DIR$/src/router/exam_list.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/exam_start.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="19" lean-forward="true" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/exam_start.js" />
     <entry file="file://$PROJECT_DIR$/src/views/admin/exam_update/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -740,21 +685,9 @@
     <entry file="file://$PROJECT_DIR$/src/router/exam_update.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/inquire_result.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/inquire_result.js" />
     <entry file="file://$PROJECT_DIR$/src/router/manmade_exam_check.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/router/mgr_result.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -787,41 +720,11 @@
     <entry file="file://$PROJECT_DIR$/src/router/paper_update.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/exam_checking/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="391" column="15" selection-start-line="391" selection-start-column="15" selection-end-line="391" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/exam_check/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2573">
-          <caret line="348" column="2" selection-start-line="348" selection-start-column="2" selection-end-line="348" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/exam_start/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="479" column="87" lean-forward="true" selection-start-line="479" selection-start-column="87" selection-end-line="479" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="462" column="102" lean-forward="true" selection-start-line="462" selection-start-column="102" selection-end-line="462" selection-end-column="102" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/exam_start/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="49" lean-forward="true" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/exam_checking/index.html" />
+    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/exam_check/index.html" />
+    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/exam_start/index.html" />
+    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/index.html" />
+    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/exam_start/App.vue" />
     <entry file="file://$PROJECT_DIR$/static/admin/question_update/js/admin_update.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="89">
@@ -829,35 +732,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/depts/exam/js/exam_Show.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1197">
-          <caret line="51" column="72" lean-forward="true" selection-start-line="51" selection-start-column="72" selection-end-line="51" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/depts/exam/js/initial_ExamData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="9" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-171" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/depts/exam_start/ExamStartView.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="8" lean-forward="true" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-          <folding>
-            <element signature="n#div#1;n#div#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/static/depts/exam/js/exam_Show.js" />
+    <entry file="file://$PROJECT_DIR$/static/depts/exam/js/initial_ExamData.js" />
+    <entry file="file://$PROJECT_DIR$/src/views/depts/exam/App.vue" />
+    <entry file="file://$PROJECT_DIR$/src/components/depts/exam_start/ExamStartView.vue" />
     <entry file="file://$PROJECT_DIR$/src/components/admin/paper_preview/PaperPreviewView.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
@@ -865,9 +743,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/depts/exam_start/Body.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/depts/exam_start/Body.vue" />
     <entry file="file://$PROJECT_DIR$/static/admin/paper_update/js/paper_update_new.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
@@ -882,30 +758,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/depts/exam/question/favorite/FavoriteView.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="105" column="214" selection-start-line="105" selection-start-column="118" selection-end-line="105" selection-end-column="214" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/depts/exam/exam_check/ExamCheckView.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="111" column="159" selection-start-line="111" selection-start-column="77" selection-end-line="111" selection-end-column="159" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/depts/exam/js/exam_check_results.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1704">
-          <caret line="348" column="5" lean-forward="true" selection-start-line="348" selection-start-column="5" selection-end-line="348" selection-end-column="5" />
-          <folding>
-            <element signature="e#7842#8496#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/depts/exam/question/favorite/FavoriteView.vue" />
+    <entry file="file://$PROJECT_DIR$/src/components/depts/exam/exam_check/ExamCheckView.vue" />
+    <entry file="file://$PROJECT_DIR$/static/depts/exam/js/exam_check_results.js" />
     <entry file="file://$PROJECT_DIR$/static/admin/exam/js/exam_check_result.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6593">
@@ -960,16 +815,10 @@
         <state relative-caret-position="-5043" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/depts/exam/js/exam_answer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="55" lean-forward="true" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/static/depts/exam/js/exam_answer.js" />
     <entry file="file://$PROJECT_DIR$/static/admin/login/account/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
+        <state relative-caret-position="855">
           <caret line="45" column="49" lean-forward="true" selection-start-line="45" selection-start-column="49" selection-end-line="45" selection-end-column="49" />
         </state>
       </provider>
@@ -983,7 +832,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/admin/exam/manmade_exam_check/ExamManCheckView.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
+        <state relative-caret-position="342">
           <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
           <folding>
             <element signature="n#div#1;n#div#0;n#template#0;n#!!top" />
@@ -995,6 +844,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="44" column="23" lean-forward="true" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/admin/exam/manmade_exam_check/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

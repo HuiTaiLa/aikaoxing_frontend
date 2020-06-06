@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+import Es6Promise from 'es6-promise'
 import Vue from 'vue'
 import App from './App'
 import router from '@/router/admin_login'
@@ -10,6 +12,7 @@ import db from '@/utils/localstorage'
 import '@/utils/install'
 
 Vue.config.productionTip = false
+Es6Promise.polyfill()
 Vue.use(Antd)
 Vue.use(Mint)
 Vue.use(ElementUI)
