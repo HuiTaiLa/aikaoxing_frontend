@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+  <title>考试系统</title>
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+  <style>
+    .el-tooltip__popper {
+      position: absolute;
+      border-radius: 4px;
+      padding: 10px;
+      z-index: 2000;
+      font-size: 12px;
+      line-height: 1.2;
+      min-width: 10px;
+    }
+    .el-tooltip__popper.is-dark {
+      background: #303133;
+      color: #fff;
+    }
+  </style>
+  <style>
+    .viewFrameWork-body .body-wrapper{padding: 0;}
+    .viewFrameWork-body .body-wrapper .body-content{background-color: transparent;}
+    .body-content .cont-r .tab-area .nav-tabs{border-bottom: 1px solid #188DFF;background-color: #fff;}
+    .body-content .cont-r .tab-area .nav-tabs li{width: 33.33%}
+    .body-content .cont-r .tab-area .nav-tabs li.active {margin-bottom: 0}
+    .body-content .cont-r .tab-area .nav-tabs li a {border:none;font-size: 16px;text-align: center;padding:21px 0}
+    .body-content .cont-r .tab-area .nav-tabs li.active a {color:#188DFF;}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box { font-size:14px;color:#333333;border: 1px solid #DEDEDE;  padding: 35px 54px;  margin: 0;  border-radius: 8px;width: 100%;}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-bar { font-size:14px;color:#333333;border: 1px solid #DEDEDE;  padding: 10px 24px;  margin: 0px;  border-radius: 8px;width: 100%;}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box .blue-link {border: 1px solid #1A8CFE;  border-radius: 4px;  font-size: 12px;padding: 6px 15px;}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box:hover,.body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-bar:hover{ background: #FFFFFF;  box-shadow: 0 0 8px 0 rgba(47,124,219,0.40);  border-radius: 8px; }
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box h3{ margin-left: -30px;font-size:14px;margin-bottom: 20px}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box input,.body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-bar input{margin-right: 14px}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box .ctb-row {margin-bottom: 18px}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box .ctb-row input {border: 1px solid #D8D8D8; border-radius: 4px;width:35%;padding: 3px 10px;}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box .ctb-row span.f-style4 {color:red}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box .ctb-row #selTypeLink { border: 1px solid #1A8CFE;  border-radius: 4px;  padding: 5px 15px; display: inline-block; margin-right: 20px;}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box .ctb-row #selTypeLink .bulleted-list{ float:right;margin-left: 10px; margin-top: 3px;}
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box .btn-div { margin-top: 28px }
+    .body-content .cont-r .tab-area .tab-content div.active .create-test-area .create-test-box .btn-div button { padding:13px 44px; }
+    .body-content .cont-r .tab-area .tab-content div.active .pick-test-aera .create-test-box {margin-top: 15px}
+    .body-content .cont-r .tab-area .tab-content div.active .pick-test-aera .create-test-bar {margin-top: 108px}
+    .body-content .cont-r .tab-area .tab-content div.active .in-hand .guide .pick-in-lib span {cursor: pointer}
+    .body-content .cont-r .tab-area .tab-content div.active .in-hand .guide .pick-in-lib span.lib-type1{padding: 6px 15px;border: 1px solid #1A8CFE;  border-radius: 4px;color:#1A8CFE;margin-right: 10px;font-size: 12px}
+    .body-content .cont-r .tab-area .tab-content div.active .in-hand .guide .pick-in-lib span.lib-type0 {padding: 6px 15px;border: 1px solid #999999;  border-radius: 4px;color:#999999;margin-right: 10px;font-size: 12px}
+    .body-content .cont-r .tab-area .tab-content div.active .in-lib .create-test-bar {margin-top: 108px}
+    .body-content .cont-r .tab-area .tab-content div.active .in-lib .create-test-box {margin-top: 15px}
+    .body-content .cont-r .tab-area .tab-content div.active .in-lib .create-test-box .btn-div a{padding: 13px 44px}
+    div#guide-step1-first {position: absolute;  right: 56%;  top: 50.4%;}
+    div#guide-step2-first {position: absolute;  right: 44.7%;  top: 40%;}
+
+    div.limitquestiontime #limitQT{
+      margin-right: 5px;
+    }
+    .line{
+      height: 20px;
+      width: 100%;
+      background-color: #EEF3F8;
+    }
+    .lineLeft,.lineRight{
+      height: 100%;
+      width: 30px;
+      background-color: #EEF3F8;
+      position: absolute;
+      top: 65px;
+    }
+    .lineLeft{
+      left: 0;
+    }
+    .lineRight{
+      right: 0;
+    }
+
+    .limitquestiontime .limit_t_btn{
+      padding: 6px 15px;
+      border: 1px solid #999999;
+      border-radius: 4px;
+      color: #999999;
+      margin-right: 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .limitquestiontime .limit_t_btn.limit_all_paper{
+      color: #1A8CFE;
+      border: 1px solid #1A8CFE;
+    }
+    .comb_paper_method{
+      height:29px;
+    }
+    #subForm{
+      margin: 20px 30px;
+      background: #fff;
+      padding: 60px 160px;
+    }
+    #stepTop{
+      height: 360px;
+      display: inline-block;
+      width: 100%;
+    }
+    #stepBottom{
+      height: 42px;
+      display: inline-block;
+      width: 100%;
+      margin-top: 15px;
+    }
+    /*禁止高亮区点击*/
+    #stepBottom.introjs-showElement,
+    #stepTop.introjs-showElement{
+      pointer-events: none;
+      cursor: default;
+      z-index: 99999999;
+    }
+    #stepBottom.introjs-showElement .create-test-bar,
+    #stepTop.introjs-showElement .create-test-box{
+      border: none;
+    }
+  </style>
+</head>
+<body>
+<div id="index">
+</div>
+<div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+  <div class="modal-dialog modal-small" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">选择分类</h4>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="518px" name="selTypeModal" id="selTypeModal"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="paperModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 9999;">
+    <div class="modal-dialog modal-large" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">选择试卷</h4>
+        </div>
+        <div class="modal-body">
+          <iframe width="100%" height="610px" name="selPaperModal" id="selPaperModal"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login?nextUrl=" + window.location.href
+  }
+</script>
+  <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+  <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+<script>
+</script>
+</body>
+</html>

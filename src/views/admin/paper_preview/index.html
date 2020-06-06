@@ -1,0 +1,125 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>考试系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="renderer" content="webkit">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=266d1fcfdf57">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/base/css/base.css?v=af1f18f7bb57">
+  <link rel="stylesheet" type="text/css" href="https://s2.kaoshixing.com/static/exam/css/exam_style.css?v=093983786a57">
+  <style>
+    /*答题卡优化*/
+    #answercardFoldBtn{
+      display:none;
+    }
+    .numberCardModal{
+      left: 90px;
+    }
+    .nav-wrapper{
+      right: 90px;
+      bottom:20px;
+    }
+    .nav-wrapper .btn.btn-primary.btn-nav{
+      bottom: -10px;
+      position: absolute;
+    }
+    .main{
+      padding: 90px 230px 80px 350px;
+    }
+    .modal-number-card .modal-body .card-content .box-list .box.s1 .iconBox{
+      border: 1px solid #DCDFE6;
+      color:#DCDFE6;
+    }
+    .insert-box .iconBox{
+      font-size:1px;
+    }
+
+    .modal-number-card .modal-header {
+      padding: 10px;
+    }
+    .numberCardModal .modal-number-card .modal-content .title{
+      margin-bottom: 0;
+    }
+    .numberCardModal .modal-number-card .modal-content .title .title_content{
+      margin-left: 14px;
+      font-weight: 600;
+      color: #27274A;
+    }
+    .modal-number-card .modal-body .card-content .card-content-title {
+      font-size: 12px;
+      color: #27274A;
+      font-weight: 600;
+    }
+    .modal-number-card .modal-body .card-content .box-list {
+      padding-bottom: 0;
+    }
+    .modal-number-card .iconBox{
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+<!-- loading -->
+<div class="spinner-wrapper hidden" id="spinnerLoading">
+  <div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+</div>
+<div id="index">
+</div>
+
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" style="display: none;">
+  <div class="modal-dialog modal-pc-message modal-logout" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-title">您是否要退出登录？</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger" id="confirmLogoutBtn">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+<script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+<script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+<script type="text/javascript">
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login?nextUrl=" + window.location.href
+  }
+  var companyId = "180731"; //公司id
+  var exam_info_id = ""; //考试ID
+  var exam_results_id = ""; //考试关联ID
+</script>
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/stickUp/stickUp.min.js?v=125ba0241757"></script>
+<script type="text/javascript">
+  var isWatermark = '0';
+</script>
+</body>
+</html>

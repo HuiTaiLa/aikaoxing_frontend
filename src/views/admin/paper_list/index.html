@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+    <title>考试系统</title>
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+    <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+    <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootgrid/jquery.bootgrid.css?v=e0e011486657">
+    <link rel="stylesheet" type="text/css" href="https://s3.kaoshixing.com/static/plugins/pikaday/pikaday.css?v=8e3f4c24fd57">
+    <style>
+      .col-sm-12.actionBar {
+        display: none;
+      }
+      /*th.text-left:last-child {
+          text-align: center;
+      }*/
+      .viewFrameWork-body .body-wrapper .body-content{padding-right: 15px;}
+      div#grid-data-footer{position: absolute;bottom: 0;width: 100%;height: 60px; padding-top:11px; background: #fff;margin-bottom: 0;}
+      table#grid-data {padding-bottom: 60px;}
+      #grid-data-footer .row .infoBar .actions .btn-group:last-child .dropdown-menu {
+        top: -235px;
+      }
+
+      #createPaperForm {padding: 0 40px;}
+      #createPaperForm .form-row{position: relative;line-height: 28px;padding-left: 90px;}
+      #createPaperForm .form-row .tip{position: absolute; right: -10px; top: 3px; font-size: 16px; color: #FF0000;line-height: 1;}
+      #createPaperForm .form-row + .form-row{margin-top: 15px;}
+      #createPaperForm .form-row .row-label{position: absolute;left: 10px;top: 0;}
+      #createPaperForm .form-row .btn + .btn{margin-left: 7px;}
+      #createPaperForm .form-row label{font-weight: normal;}
+      #createPaperForm .form-row .btn i{margin-left: 5px;}
+      #createPaperForm .form-row .btn.not-selected{border: 1px solid #DEDEDE;color: #C1C1CB;}
+      #createPaperModal .modal-header{padding-top: 30px;padding-bottom: 18px;}
+      #createPaperForm .btn-default{line-height: 1.4;}
+      #createPaperForm .form-control{height: 28px;}
+      #createPaperForm .form-row input[type=checkbox]{margin-right: 3px;}
+      .del-test .modal-dialog,
+      .del-test .modal-content,
+      .exam-not-del .modal-dialog,
+      .exam-not-del .modal-content{
+        width: 440px;
+        border: none;
+      }
+      .exam-del .close,
+      .del-test .close,
+      .exam-not-del .close{
+        display: none;
+      }
+      .del-test .bootstrap-dialog-message{
+        font-size: 20px;
+        color: #27274A;
+      }
+      .exam-del .del-test-no,
+      .exam-del  .del-test-yes,
+      .del-test .del-test-no,
+      .del-test  .del-test-yes{
+        height: 34px;
+        width: 100px;
+        font-size: 14px;
+      }
+      .exam-del .del-test-yes,
+      .del-test .del-test-yes{
+        background: #FF0000;
+        border-radius: 4px;
+        color: #FFFFFF;
+        margin-left: 14px!important;
+      }
+      .exam-del .del-test-no,
+      .del-test .del-test-no{
+        background: #F2F2F2;
+        border-radius: 4px;
+        color: #666666;
+      }
+      .del-test .modal-footer{
+        padding: 32px 15px;
+        border-top: 0;
+      }
+      .del-test .modal-header{
+        border-bottom: 0;
+        height: 50px;
+      }
+      .exam-del .modal-header,
+      .exam-not-del .modal-header{
+        height: 70px;
+        border: none;
+        font-size: 20px;
+        color: #27274A;
+        padding: 50px 0 0 0;
+      }
+      .exam-del .bootstrap-dialog-title,
+      .exam-not-del .bootstrap-dialog-title{
+        line-height: 1;
+      }
+      .exam-del .modal-body,
+      .exam-not-del .modal-body{
+        margin-top: 18px;
+      }
+      .exam-del .modal-body p,
+      .exam-not-del .modal-body p {
+        padding: 0px !important;
+        margin: 0;
+      }
+      .exam-not-del .exam-del-btn{
+        width: 100px;
+        height: 34px;
+        background: #F2F2F2;
+        border-radius: 4px;
+        border-color: #F2F2F2;
+        font-size: 14px;
+        color: #666666;
+      }
+      .exam-del .modal-footer,
+      .exam-not-del .modal-footer{
+        height: 98px;
+        border: none;
+        padding: 32px 15px;
+      }
+      /*表格滑动-滚动条被分页器遮挡住了，需要调整让滚动条出现*/
+      #grid-data{
+        padding-bottom:unset!important; /*去掉60px的底部填充*/
+      }
+      #grid-data-footer{
+        bottom:-60px!important; /*分页器也随着下移60px的底部距离*/
+      }
+      .select-label{ /*设置不换行后，勾选框的边距消失，需要再设置*/
+        margin: 0 14px!important;
+      }
+
+      #examClassify{
+        padding-top: 8px;
+        padding-bottom: 9px;
+      }
+      .icon-a_btn_classify{
+        font-size: 14px;
+        position: relative;
+        top: 1px;
+      }
+    </style>
+    <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+    @keyframes caretBlink {
+      from { opacity: 1.0; }
+      to { opacity: 0.0; }
+    }
+
+    @keyframes rotateSpinner {
+      from {
+        transform:rotate(0deg);
+      }
+      to {
+        transform:rotate(360deg);
+      }
+    }
+
+    #text-tool-caret {
+      animation-name: caretBlink;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+      animation-duration: 1s;
+    }
+
+    #en-markup-loading-spinner {
+      position: absolute;
+      top: calc(50% - 16px);
+      left: calc(50% - 16px);
+      width: 32px;
+      height: 32px;
+    }
+
+    #en-markup-loading-spinner img {
+      position: relative;
+      top: 0px;
+      left: 0px;
+      animation-name: rotateSpinner;
+      animation-duration: 0.6s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+    </style>
+    <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+    .skitchToastBoxContainer {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 30px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      pointer-events: none;
+    }
+
+    .skitchToastBox {
+      width: 200px;
+      height: 16px;
+      padding: 12px;
+      background-color: rgba(47, 55, 61, 0.95);
+      border-radius: 4px;
+      color: white;
+      cursor: default;
+      font-size: 10pt;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.32);
+      font-family: 'Soleil', Helvetica, Arial, sans-serif;
+      border: 2px rgba(255, 255, 255, 0.38) solid;
+    }
+
+    .lang-zh-cn .skitchToastBox {
+      font-family: '微软雅黑', 'Microsoft YaHei', SimSun,
+      '&#x30E1;&#x30A4;&#x30EA;&#x30AA;', Meiryo, 'MS PGothic', 'Soleil',
+      Helvetica, Arial, sans-serif;
+    }
+
+    .lang-ja-jp .skitchToastBox {
+      font-family: '&#x30E1;&#x30A4;&#x30EA;&#x30AA;', Meiryo, 'MS PGothic',
+      '微软雅黑', 'Microsoft YaHei', SimSun, 'Soleil', Helvetica, Arial,
+      sans-serif;
+    }
+
+    .skitchToast {
+      padding-left: 20px;
+      padding-right: 20px;
+      display: inline-block;
+      height: 10px;
+      color: #f1f5f8;
+      text-align: center;
+    }
+
+    .skitchVisible {
+      /* Don't remove this class it's a hack used by the Evernote Clipper */
+    }
+    </style>
+    <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+
+    @font-face {
+      font-family: 'Soleil';
+
+      font-weight: normal;
+      font-style: normal;
+    }
+    </style>
+    <style type="text/css">/* Copyright 2019-present Evernote Corporation. All rights reserved. */
+
+    #en-markup-disabled {
+      position: fixed;
+      z-index: 9999;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+      cursor: default;
+      -webkit-user-select: none;
+    }
+
+    #en-markup-alert-container {
+      position: absolute;
+      z-index: 9999;
+      width: 450px;
+      left: calc(50% - 225px);
+      top: calc(50% - 85px);
+      background-color: white;
+      box-shadow: 0 2px 7px 1px rgba(0,0,0,0.35);
+      -webkit-user-select: none;
+    }
+
+    #en-markup-alert-container .cell-1 {
+      position: relative;
+      height: 110px;
+      width: 105px;
+      float: left;
+      text-align: center;
+
+      background-position: 65% 50%;
+      background-repeat: no-repeat;
+    }
+
+    #en-markup-alert-container .cell-2 {
+      position: relative;
+      float: left;
+      width: 345px;
+      margin-top: 29px;
+      margin-bottom: 20px;
+    }
+
+    #en-markup-alert-container .cell-2 .cell-2-title {
+      margin-bottom: 5px;
+      padding-right: 30px;
+      font-size: 12pt;
+      font-family: Tahoma, Arial;
+    }
+
+    #en-markup-alert-container .cell-2 .cell-2-message {
+      padding-right: 30px;
+      font-size: 9.5pt;
+      font-family: Tahoma, Arial;
+    }
+
+    #en-markup-alert-container .cell-3 {
+      position: relative;
+      width: 450px;
+      height: 60px;
+      float: left;
+      background-color: rgb(240,240,240);
+    }
+
+    #en-markup-alert-container .cell-3 button {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      width: 110px;
+      height: 36px;
+    }
+
+    #en-markup-alert-container .cell-3 button.alt-button {
+      position: absolute;
+      top: 12px;
+      right: 140px;
+      width: 110px;
+      height: 36px;
+    }
+    </style>
+    <style>
+      .el-tooltip__popper {
+        position: absolute;
+        border-radius: 4px;
+        padding: 10px;
+        z-index: 2000;
+        font-size: 12px;
+        line-height: 1.2;
+        min-width: 10px;
+      }
+      .el-tooltip__popper.is-dark {
+        background: #303133;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="index">
+    </div>
+    <div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-small" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title model-exam-classify" id="myModalLabel">选择试卷分类</h4>
+          </div>
+          <div class="modal-body">
+            <iframe width="100%" height="518px" name="selTypeModal" id="selTypeModal"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+      var now = new Date()
+      var year = now.getFullYear().toString()
+      var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+      var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+      var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+      var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+      var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+      var nowTime = year+month+date+hour+minute+second
+      if(nowTime - expireTime >= -10){
+        window.location.href = "/admin/login?nextUrl=" + window.location.href
+      }
+    </script>
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+    <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+    <script type="text/javascript" src="/static/common/plugins/bootgrid/jquery.bootgrid-ksx.js"></script>
+    <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+    <script type="text/javascript" src="https://s0.kaoshixing.com/static/plugins/laydate-new/laydate.js?v=69d16c441057"></script>
+    <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+    <script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/colResizable-1.6.min.js?v=031048987157"></script>
+    <script src="https://s4.kaoshixing.com/static/plugins/createdPicture/html2canvas.js?v=418889293e"></script>
+    <script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/clipboard/clipboard.min.js?v=3e5e0fa94957"></script>
+    <script type="text/javascript" src="https://s0.kaoshixing.com/static/plugins/pikaday/moment.js?v=94dde4ec2657"></script>
+    <script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/pikaday/pikaday.js?v=5c81b2646857"></script>
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/pikaday/pikaday.jquery.js?v=67f9aeffb457"></script>
+
+  </body>
+</html>

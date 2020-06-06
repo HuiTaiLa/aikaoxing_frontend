@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+  <title>考试系统</title>
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/admin/css/paper_manual_add.css?v=63e28e13ed57">
+  <style>
+    .el-tooltip__popper {
+      position: absolute;
+      border-radius: 4px;
+      padding: 10px;
+      z-index: 2000;
+      font-size: 12px;
+      line-height: 1.2;
+      min-width: 10px;
+    }
+    .el-tooltip__popper.is-dark {
+      background: #303133;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div id="index">
+</div>
+<div class="modal fade" id="questionsTypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 99999; display: none;">
+  <div class="modal-dialog modal-small" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">选择试题分类</h4>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="518px" name="selQuestionsTypeModal" id="selQuestionsTypeModal">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="difficultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 9999;">
+  <div class="modal-dialog" role="document" style="margin-top:200px;width: 440px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">添加试题</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>试题分类：</label>
+          <a href="#" id="selTypeLinkPaper">请选择</a>
+        </div>
+
+
+        <div class="form-group" style="margin-left: 20px;">
+          <label>选题方式：</label>
+          <div class="setDifficultContent">
+            <p>
+              简单
+              <input type="text" class="difficult" name="difficult1" autocomplete="off" value="0">
+              /
+              <span class="difficult1_num">0</span>
+              &nbsp;&nbsp;&nbsp;
+            </p>
+            <p>
+              普通
+              <input type="text" class="difficult" name="difficult2" autocomplete="off" value="0">
+              /
+              <span class="difficult2_num">0</span>
+              &nbsp;&nbsp;&nbsp;
+            </p>
+            <p>
+              困难
+              <input type="text" class="difficult" name="difficult3" autocomplete="off" value="0">
+              /
+              <span class="difficult3_num">0</span>
+              &nbsp;&nbsp;&nbsp;
+            </p>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="cancelEndBtn" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="saveTextBtn">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="questionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-large modal-iframe" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">选择试题</h4>
+
+        <!--<span class="add-quest">-->
+                            <!--<span class="icon-a_btn_add"></span>-->
+                            <!--添加试题-->
+                        <!--</span>-->
+
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="100%" name="selQuestionFrame" id="selQuestionFrame"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addQuestionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-large modal-iframe" role="document" style="width: 1240px;margin-left: -613px;max-height: 674px;">
+    <span class="icon-a_close close-x" data-dismiss="modal"></span>
+    <iframe width="100%" height="100%" name="publicQuestion" id="publicQuestion"></iframe>
+  </div>
+</div>
+
+<div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+  <div class="modal-dialog modal-small" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title model-exam-classify" id="myModalLabel">选择试卷分类</h4>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="518px" name="selTypeModal" id="selTypeModal"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login?nextUrl=" + window.location.href
+  }
+</script>
+  <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+  <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+  <script src="http://malsup.github.com/jquery.form.js"></script>
+<script>
+</script>
+<script>
+
+
+  var labelOpen = "false"; //开启试题标签开关
+
+  // 导航权限
+  var allRights = 'SubAdminModel(id=0, userId=0, companyId=0, allowUserMgr=1, allowUserAdd=1, allowUserReg=1, allowUserPaySet=1, allowSubAdminMgr=1, allowPaperAdd=1, allowAddtestqm=1, allowShowtestqm=1, allowPaperMgr=1, allowExamMgr=1, allowResultMgr=1, allowAnalysisExam=1, allowModify=1, allowFileManager=1, allowCourseAdd=1, allowCourseManager=1, allowStudyRecord=1, allowCustomProcess=1, allowPayCenter=1, allowAdminOrderRecord=1, allowExamineePayRecord=1, allowTransactionRecord=1, allowAnalysisPerson=1, allowLogoSetting=1, allowAdminOpRecord=1, allowFollowApp=1, allowCertificateCenter=1, allowSignUp=1, allowExamShow=1, allowCourseShow=1, allowProcessShow=1, allowDevInfoMgr=1, allowAppSet=1, allowAdvancedSet=1, allowPointRank=0)';
+  $("#btn-first").on("click",function(){
+    $("#guide-first").hide();
+    $("#guide-second").show();
+  });
+  $("#btn-second").on("click",function(){
+    $("#guide-second").hide();
+    $.ajax({
+      type:'GET',
+      cache : false,
+      headers: { "cache-control": "no-cache" },
+      dataType: "json",
+      url: "/index/account/update_first_visit?firstUrl=examadmin/admin/paper_manual_add/",
+      success:function (msg) {
+      }
+    });
+  });
+  var is_first_visit="";
+  $(".questionType_add").click(function(){
+    $("#manualInput .questions-board .com-drop ").addClass("buttonLeft");
+    $("#manualInput .questions-board .emptyTip").hide();
+  });
+  $(".tooltip-disorder").tooltip();
+
+  var scroll_now_idx = 0;//记录滚动到视野中的大题index
+  //视窗滚动事件
+  $(".viewFrameWork-body").scroll(function(){
+    var box_height = $("#viewFrameWork").height();
+    var left_height = $(".info-board").height();
+    var right_height = $(".questions-board").height();
+    $(".info-board .item").removeClass("item-active");
+    //当左侧侧边栏的高度小于页面高度时，侧边栏固定
+    if(left_height+173 < box_height) {
+      $(".info-board").offset({
+        top: 173
+      });
+      //左侧侧边栏的高度大于页面高度的时候，与页面联动
+    }
+    else{
+      for(var i=0;i<$(".questions-board .group_simple").length;i++){
+        var first_child = $(".questions-board .group_simple:eq("+i+") .group_title");
+        var last_child = $(".questions-board .group_simple:eq("+i+") .manual-cont");
+        if(last_child.children(".questions").length > 0){
+          last_child = last_child.children(".questions:last");
+        }
+        if(first_child.offset().top<173 && last_child.offset().top>100){
+          scroll_now_idx = i;
+        }
+      }
+      var scroll_distance = 0;
+      for(var i=0;i<scroll_now_idx;i++){
+        scroll_distance += ($(".info-board .item:eq("+i+")").height()-50);
+      }
+      $(".info-board .item:eq("+scroll_now_idx+")").addClass("item-active");
+      if($('.nav.nav-tabs').length!=0){ //判断上方是否存在'第一步'等步骤提示来决定偏移的不同，原来的计算在出现上方步骤提示时有偏差，现在分情况进行偏移
+        $(".info-board").offset({
+          top: -scroll_distance+173-scroll_now_idx*43-7.82
+        });
+      }else{
+        $(".info-board").offset({
+          top: -scroll_distance+130-scroll_now_idx*43-30 //新页面设计，需要去除顶部填充的30px顶部距离
+        });
+      }
+    }
+  });
+  //左侧item click事件
+  var leftItemClick = function(that) {
+    var box_height = $("#viewFrameWork").height();
+    var right_height = $(".questions-board").height();
+    var idx = $(that).index();
+    var click_distance = 0;
+    for (var i = 0; i < idx; i++) {
+      click_distance += $(".questions-board .group_simple:eq(" + i + ")").height();
+    }
+    if($(".viewFrameWork-body").scrollTop()+box_height<right_height){
+      $(".viewFrameWork-body").animate({
+        scrollTop: click_distance + 43 * idx + 120
+      }, 600);
+    }
+    $(".info-board .item").removeClass("item-active");
+    $(that).addClass("item-active");
+  }
+  $(".info-board .item").click(function(){
+    leftItemClick(this);
+  });
+
+</script>
+</body>
+</html>

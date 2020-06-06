@@ -1,0 +1,295 @@
+<html><head>
+  <meta charset="utf-8">
+  <title>考试系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="shortcut icon" href="/static/images/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <link rel="stylesheet" href="https://s0.kaoshixing.com/static/base/css/modal_content_style.css?v=dc8373ade357">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/plugins/ztree/css/zTreeStyle/zTreeStyle.css?v=63af70951757">
+  <link rel="stylesheet" type="text/css" href="https://s3.kaoshixing.com/static/admin/css/customer.css?v=a709fda1f757">
+  <style>
+    .setRigth .setRigthContent {
+      margin: 0 10px 10px 30px;
+    }
+    .setRigthContent .title {
+      height: 20px;
+      line-height: 20px;
+    }
+    .buttonP{
+      position:fixed;
+      bottom:0;
+      _position:absolute;
+      /* for IE6 */
+      _top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight);
+      /* for IE6 */
+      overflow:visible;
+    }
+    #closeBtn, #closeBtn:hover{ width: 100px;  height: 34px;  font-size: 12px;  border-radius: 4px;  line-height: 34px;  padding: 0; color: #666666;  background: #f2f2f2;}
+    #saveBtn, #saveBtn:hover{width: 100px;  height: 34px;  font-size: 12px;  border-radius: 4px;  line-height: 34px;  padding: 0;color: #ffffff;  background: #1A8CFE;}
+  </style>
+</head>
+
+<body>
+<div class="setRigth">
+  <div class="setRigthContent">
+    <form action="" name="form" method="post" id="subForm">
+      <div class="topSelDiv" style="min-height:200px">
+        <ul id="treeDemo" class="ztree"></ul>
+      </div>
+      <div class="buttonP">
+        <a class="button" href="#" id="closeBtn">关闭</a>
+        <a class="button" href="#" id="saveBtn">选择</a>
+      </div>
+    </form>
+  </div>
+
+</div>
+<!-- /container -->
+
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+<script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+<script type="text/javascript">
+  (function ($) {
+    $(document).ready(function() {
+      if ($.isFunction($.bootstrapIE6)) $.bootstrapIE6($(document));
+    });
+  })(jQuery);
+</script>
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/ztree/js/jquery.ztree.all-3.5.min.js?v=671f5f9b0457"></script>
+<script type="text/javascript" src="https://s0.kaoshixing.com/static/admin/js/admin_main.js?v=a2964f524757"></script>
+  <script>
+    var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+    var now = new Date()
+    var year = now.getFullYear().toString()
+    var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+    var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+    var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+    var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+    var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+    var nowTime = year+month+date+hour+minute+second
+    if(nowTime - expireTime >= -10){
+      window.location.href = "/admin/login"
+    }
+  </script>
+<script type="text/javascript">
+  $.ajaxSetup({
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",
+    headers:{
+      Authentication:JSON.parse(window.localStorage.getItem("USER_TOKEN"))
+    },
+    statusCode: {
+      404: function() {
+        window.location.href="/admin/error/404";
+      },
+      504: function() {
+        window.location.href="/admin/error/default";
+      },
+      500: function() {
+        window.location.href="/admin/error/default";
+      },
+      429:function () {
+        alert("您操作过于频繁！");
+      },
+      401:function () {
+        window.location.href="/admin/error/401";
+      },
+      400:function () {
+        window.location.href="/admin/error/400";
+      },
+      403:function () {
+        window.location.href="/admin/error/403";
+      },
+    }
+  });
+  var user = JSON.parse(window.localStorage.getItem("USER"));
+  var chkDisabledStr=''; // 未开启试题标签时的已选分类，并禁止其他试题重复再选
+  Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+  };
+  var setting = {
+    view: {
+      selectedMulti: false
+    },
+    check:{
+      enable:true,
+      chkboxType: { "Y" : "s", "N" : "s" }
+    },
+    edit: {
+      enable: false,
+      editNameSelectAll: true
+    },
+    data: {
+      simpleData: {
+        enable: true
+      }
+    },
+    callback: {
+    }
+  };
+
+  var zNodes =[
+    /*{ id:1, pId:0, name:"父节点 1", open:true},
+     { id:11, pId:1, name:"叶子节点 1-1"},
+     { id:12, pId:1, name:"叶子节点 1-2"},
+     { id:13, pId:1, name:"叶子节点 1-3"},
+     { id:2, pId:0, name:"父节点 2", open:true},
+     { id:21, pId:2, name:"叶子节点 2-1"},
+     { id:22, pId:2, name:"叶子节点 2-2"},
+     { id:23, pId:2, name:"叶子节点 2-3"},
+     { id:3, pId:0, name:"父节点 3", open:true},
+     { id:31, pId:3, name:"叶子节点 3-1"},
+     { id:32, pId:3, name:"叶子节点 3-2"},
+     { id:33, pId:3, name:"叶子节点 3-3"}*/
+  ];
+
+  //	读取树数据
+  function loadTree(){
+    if(parent.labelOpen=='true'){
+      $.ajax({
+        type: "GET",
+        cache : false,
+        headers: { "cache-control": "no-cache" },
+        dataType: "json",
+        url: "/api/question/classification/" + user.account + "/" + user.companyId,
+        success: function(msg){
+          zNodes = msg;
+          if(zNodes.success==true){
+//                    zNodes.shift();
+            //初始化树
+//				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            var nodeList = []
+            var list = zNodes.bizContent
+            for(var i = 0,len = list.length;i<len;i++ ){
+              var temp = {}
+              temp["id"] = list[i].id
+              temp["name"] = list[i].name
+              temp["pId"] = list[i].pId
+              temp["open"] = list[i].open?true:false
+              temp["onlyRead"] = list[i].onlyRead
+              nodeList.push(temp)
+            }
+            var zTree=$.fn.zTree.init($("#treeDemo"), setting, nodeList);
+            var nodes = zTree.getNodes();
+            for(var i=0;i<nodes.length;i++){
+              zTree.expandNode(nodes[i],true,true,true,true);
+            }
+            checkTreeNode(); //勾选
+          }else{
+            alert("读取数据失败，请联系管理员！");
+          }
+        }
+      });
+    }else{
+      var chkDisabledArr = parent.typeObject[parseInt(parent.selTypes)]; //禁选的分类id
+
+      var selIds = $(parent._checked_this).parents('.extract-box-tit').find(".checked_classify_ids").val().split(","); //当前试题已勾选的分类id
+      if(chkDisabledArr) {
+        chkDisabledStr = (chkDisabledArr.filter(function(id,index){ //从禁选的分类id中，剔除本题已勾选的id, 只传其他题被勾选的id ，允许修改本题的分类
+          return selIds.indexOf(id) == -1;
+        })).join(",");
+      }
+      $.ajax({
+        type: "GET",
+        cache : false,
+        headers: { "cache-control": "no-cache" },
+        dataType: "json",
+        url: "/api/question/classification/" + user.account + "/" + user.companyId,
+        data:'selectedIds=' + chkDisabledStr,
+        success: function(msg){
+          zNodes = msg;
+          if(zNodes.success==true){
+            var nodeList = []
+            var list = zNodes.bizContent
+            for(var i = 0,len = list.length;i<len;i++ ){
+              var temp = {}
+              temp["id"] = list[i].id
+              temp["name"] = list[i].name
+              temp["pId"] = list[i].pId
+              temp["open"] = list[i].open?true:false
+              temp["onlyRead"] = list[i].onlyRead
+              nodeList.push(temp)
+            }
+//                    zNodes.shift();
+            //初始化树
+//				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            var zTree=$.fn.zTree.init($("#treeDemo"), setting, nodeList);
+            var nodes = zTree.getNodes();
+            for(var i=0;i<nodes.length;i++){
+              zTree.expandNode(nodes[i],true,true,true,true);
+            }
+            checkTreeNode(); //勾选
+          }else{
+            alert("读取数据失败，请联系管理员！");
+          }
+        }
+      });
+    }
+  }
+  loadTree();
+  //如果有已选类型进行勾选操作
+  function checkTreeNode(e){
+    // var selIds = $(parent.selTr).find("input[name=test_classify_id]").val();
+    var user_id = parent.user_id;
+    var selIds=$(parent._checked_this).parents('.extract-box-tit').find(".checked_classify_ids").val();//localStorage.getItem("selArry"+user_id);
+    // var questionId=$(parent.selTr).find("input[name=test_classify_id]").parents
+    if(selIds!=""){
+      var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+      var list = selIds.split(",");
+      // list.pop();
+      $.each(list,function(index, value){
+        var node = zTree.getNodeByParam("id", value, null);
+        if(node!=null){
+          zTree.checkNode(node, true, false);
+          zTree.setChkDisabled(node, false);
+        }
+      });
+    }
+  }
+  //选择
+  $("#saveBtn").click(function(e) {
+    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+    var nodes = zTree.getCheckedNodes(true);
+    var flag = -1;
+    for(var i = 0,len = nodes.length;i < len; i++){
+      (nodes[i].id == 1)&&(flag=i,len = i - 1)
+    }
+    flag>=0&&nodes.remove(flag)
+    var clickNodeChilds = nodes.length;
+    var ids = "";
+    var names = "";
+    if(clickNodeChilds===0){
+      alert("请选择试题分类！")
+      return ;
+    }
+    for(i=0;i<clickNodeChilds;i++){
+      if(i==clickNodeChilds.length-1){
+        ids += nodes[i].id;
+      }else {
+        ids += nodes[i].id+",";
+      }
+      names += nodes[i].name+"；";
+    }
+    if(names.toString().length>20){
+      names = names.substr(0,20);
+    }
+    names = names+"...";
+    parent.selQuestionsType(ids , names);
+    parent.hideQuestionsSelType();
+    // parent.showDifficult(false,true);//false 是为使函数中的obj参数判断不成立，true是为了给试题难度模态框添加标记
+  });
+  $("#closeBtn").click(function(e) {
+    parent.hideQuestionsSelType();
+  });
+  //
+
+</script>
+
+
+
+</body></html>

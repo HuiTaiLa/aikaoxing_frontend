@@ -1,0 +1,613 @@
+<html><head>
+  <meta charset="utf-8">
+  <title>考试系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="shortcut icon" href="/static/images/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" href="https://s0.kaoshixing.com/static/base/css/modal_content_style.css?v=dc8373ade357">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/plugins/ztree/css/zTreeStyle/zTreeStyle.css?v=63af70951757">
+  <link rel="stylesheet" type="text/css" href="https://s3.kaoshixing.com/static/admin/css/customer.css?v=a709fda1f757">
+  <style>
+    ::-webkit-scrollbar{
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-thumb{
+      border-radius: 1em;
+      background-color: rgba(50,50,50,.3);
+    }
+    ::-webkit-scrollbar-track{
+      border-radius: 1em;
+      background-color: rgba(50,50,50,.0);
+    }
+    .setRigth .setRigthContent {
+      /*margin: 0 10px 10px 30px;*/
+      height: 300px;
+      padding-bottom: 0;
+    }
+    #subForm,
+    .topSelDiv,
+    #treeDemo{
+      height: 235px;
+    }
+    .ztree li ul {
+      margin: 0;
+      padding: 0 0 0px 18px;
+    }
+    .setRigthContent .title {
+      height: 20px;
+      line-height: 20px;
+    }
+    #closeBtn,
+    #saveBtn{
+      width: 40px;
+      height: 25px;
+      line-height: 25px;
+    }
+    #closeBtn,#closeBtn:hover{
+      width: 40px;
+      height: 25px;
+      font-size: 12px;
+      border-radius: 4px;
+      padding: 0;
+      color: #666666;
+      background: #f2f2f2;
+      border-color: #f2f2f2;
+    }
+    #saveBtn,#saveBtn:hover{
+      width: 40px;
+      height: 25px;
+      line-height: 25px;
+      font-size: 12px;
+      border-radius: 4px;
+      padding: 0;
+      color: #ffffff;
+      background: #1A8CFE;
+    }
+    #treeDemo_1{
+      /*margin-bottom: 100px;*/
+    }
+    .ztree{
+      overflow: auto;
+    }
+  </style>
+</head>
+
+<body>
+<div class="setRigth">
+  <div class="setRigthContent">
+    <form action="" name="form" method="post" id="subForm">
+      <div class="topSelDiv">
+        <ul id="treeDemo" class="ztree"><li id="treeDemo_1" class="level0" tabindex="0" hidefocus="true" treenode="">
+          <span id="treeDemo_1_switch" title="" class="button level0 switch root_open" treenode_switch=""></span>
+          <span id="treeDemo_1_check" class="button chk checkbox_false_full" treenode_check=""></span>
+          <a id="treeDemo_1_a" class="level0" treenode_a="" onclick="" target="_blank" style="" title="试题分类">
+            <span id="treeDemo_1_ico" title="" treenode_ico="" class="button ico_open" style=""></span>
+            <span id="treeDemo_1_span">试题分类</span>
+          </a>
+          <ul id="treeDemo_1_ul" class="level0 " style="">
+
+          </ul>
+        </li>
+        </ul>
+      </div>
+      <div class="buttonP">
+        <a class="button" href="#" id="closeBtn">关闭</a>
+        <a class="button" href="#" id="saveBtn">选择</a>
+      </div>
+    </form>
+
+    <input class="checkChangeStatus" type="hidden" value="1">
+  </div>
+</div>
+<!-- modal -->
+<div class="modal fade ksx" id="delete-type" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width: 100%;margin: auto;">
+  <div class="modal-dialog" role="document" style="width: 96%;margin: 30px auto;">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -3px;font-weight: 400;"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel" style="margin: 0;text-align: center;color: #1d1d1d;">删除分类</h4>
+      </div>
+      <div class="modal-body" style="font-size:18px;padding-top:20px;padding-bottom:0;text-align:center;">
+        <div class="cont_main">
+          <p style="line-height: 1.4;font-size: 14px; color: #999;">当前分类下有数据，<br>确定删除该分类及里面包括的所有数据？</p>
+          <input class="confirm-delete" type="text" style="border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    width: 80%;
+    font-size: 14px;" placeholder="请输入DEL以确认" placeholder-style="color:#999">
+        </div>
+        <div style="margin:20px 0;">
+          <button type="button" class="el-button rm-delete">取消</button>
+          <button type="button" class="el-button close-delete">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+<script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+<script>
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login"
+  }
+</script>
+<script type="text/javascript">
+  (function ($) {
+    $(document).ready(function() {
+      if ($.isFunction($.bootstrapIE6)) $.bootstrapIE6($(document));
+    });
+  })(jQuery);
+</script>
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/ztree/js/jquery.ztree.all-3.5.min.js?v=671f5f9b0457"></script>
+<script type="text/javascript" src="https://s0.kaoshixing.com/static/admin/js/admin_main.js?v=a2964f524757"></script>
+<script type="text/javascript">
+  $.ajaxSetup({
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",
+    headers:{
+      Authentication:JSON.parse(window.localStorage.getItem("USER_TOKEN"))
+    },
+    statusCode: {
+      404: function() {
+        window.location.href="/admin/error/404";
+      },
+      504: function() {
+        window.location.href="/admin/error/default";
+      },
+      500: function() {
+        window.location.href="/admin/error/default";
+      },
+      429:function () {
+        alert("您操作过于频繁！");
+      },
+      401:function () {
+        window.location.href="/admin/error/401";
+      },
+      400:function () {
+        window.location.href="/admin/error/400";
+      },
+      403:function () {
+        window.location.href="/admin/error/403";
+      },
+    }
+  });
+
+  Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+  };
+
+  var user = JSON.parse(window.localStorage.getItem("USER"));
+  var role ="admin";
+  var setting = {
+    view: {
+      addHoverDom: addHoverDom,
+      removeHoverDom: removeHoverDom,
+      selectedMulti: false
+    },
+    check:{
+      enable:true,
+      chkboxType: { "Y" : "s", "N" : "s" }
+    },
+    edit: {
+      drag:{
+        autoExpandTrigger: false,
+        isCopy:false,
+        isMove:false,
+        prev:true,
+        next:true,
+        inner:true,
+        borderMax: 10,
+        borderMin: -5,
+        minMoveSize: 5,
+        maxShowNodeNum: 5,
+        autoOpenTime: 500,
+      },
+      editNameSelectAll: true,
+      enable: true,
+      removeTitle: "删除",
+      renameTitle: "编辑",
+      showRemoveBtn: true,
+      showRenameBtn: true
+    },
+    data: {
+      simpleData: {
+        enable: true
+      }
+    },
+    callback: {
+      beforeDrag: beforeDrag,
+      beforeDrop: beforeDrop,
+      beforeEditName: beforeEditName,
+      beforeRemove: beforeRemove,
+      beforeRename: beforeRename,
+//            onRemove: onRemove,
+      onRename: onRename,
+      onDrop:onDrop,
+    }
+  };
+  var esetting = {
+    view: {
+      addHoverDom: addHoverDom,
+      removeHoverDom: removeHoverDom,
+      selectedMulti: false
+    },
+    check:{
+      enable:true,
+      chkboxType: { "Y" : "s", "N" : "s" }
+    },
+    edit: {
+      drag: {
+        isCopy: false,
+        isMove: false
+      },
+      editNameSelectAll: true,
+      enable: true,
+      removeTitle: "删除",
+      renameTitle: "编辑",
+      showRemoveBtn: true,
+      showRenameBtn: true
+    },
+    data: {
+      simpleData: {
+        enable: true
+      }
+    },
+    callback: {
+      beforeEditName: beforeEditName,
+      beforeRemove: beforeRemove,
+      beforeRename: beforeRename,
+//            onRemove: onRemove,
+      onRename: onRename
+    }
+  };
+
+  var zNodes =[
+//	 id:1, pId:0, name:"父节点 1", open:true},
+//	{ id:11, pId:1, name:"叶子节点 1-1"},
+//	{ id:12, pId:1, name:"叶子节点 1-2"},
+//	{ id:13, pId:1, name:"叶子节点 1-3"},
+//	{ id:2, pId:0, name:"父节点 2", open:true},
+//	{ id:21, pId:2, name:"叶子节点 2-1"},
+//	{ id:22, pId:2, name:"叶子节点 2-2"},
+//	{ id:23, pId:2, name:"叶子节点 2-3"},
+//	{ id:3, pId:0, name:"父节点 3", open:true},
+//	{ id:31, pId:3, name:"叶子节点 3-1"},
+//	{ id:32, pId:3, name:"叶子节点 3-2"},
+//	{ id:33, pId:3, name:"叶子节点 3-3"}
+  ];
+  var log, className = "dark";
+  function beforeDrag(treeId, treeNodes) {
+    return false;
+  };
+  function beforeDrag(treeId, treeNodes) {
+    for (var i=0,l=treeNodes.length; i<l; i++) {
+      if (treeNodes[i].drag === false) {
+        return false;
+      }
+    }
+    return true;
+  };
+  function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+    return targetNode ? targetNode.drop !== false : true;
+  };
+  function onDrop(event, treeId, treeNodes, targetNode, moveType){
+    if (treeNodes[0].pId==null) {
+      alert("禁止拖拽");
+      loadTree();
+    }else{
+      // console.log(zNodes);
+      // console.log(nodes);
+      // console.log(targetNode);
+      // console.log(zTree.getNodes());
+      ztree_string=JSON.stringify(zTree.getNodes());
+      new_pid=treeNodes[0].pId;
+      treeNodeId=treeNodes[0].id;
+      // console.log(treeNodeId);
+      // console.log(new_pid);
+      // console.log(ztree_string);
+      _new=[new_pid,treeNodeId];
+      tree=ztree_string;
+      dragData="_new="+_new+"&tree="+tree;
+      // console.log(dragData);
+      $.ajax({
+        type: "POST",
+        cache: false,
+        headers: {"cache-control": "no-cache"},
+        dataType: "json",
+        url: "/baseinfo/admin/tree/tests_class/drag_json",
+        data: dragData,
+        success: function(msg) {
+        },
+        error:function(){
+          alert("拖拽失败");
+        }
+      });
+      // alert("拖拽完成");
+    }
+  };
+  function beforeEditName(treeId, treeNode) {
+    if(treeNode.id=='1'){
+      alert("根节点不能编辑！")
+      return false
+    }else if(treeNode.onlyRead == 1){
+      alert("您不具有删除该节点的权限！")
+      return false
+    }
+    className = (className === "dark" ? "":"dark");
+    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+    zTree.selectNode(treeNode);
+  }
+  //using for delete
+  var deleteData = "";
+  function beforeRemove(treeId, treeNode) {
+    if(treeNode.id=='1'){
+      alert("根节点不能删除！")
+      return false
+    }else if(treeNode.onlyRead == 1){
+      alert("您不具有删除该节点的权限！")
+      return false
+    }
+    deleteData = "id=" + treeNode.id ;
+    $.ajax({
+      type: "POST",
+      cache: false,
+      headers: {"cache-control": "no-cache"},
+      dataType: "json",
+      url: "/api/question/del_class",
+      data: deleteData + "&account="+user.account+"&companyId="+user.companyId + "&del=false",
+      success: function(msg) {
+        if (!msg.success) {
+          if (msg.code == 31025) {
+            $(".confirm-delete").val("");
+            $("#delete-type").modal('show');
+            loadTree();
+          } else {
+            alert(msg.desc);
+            return false;
+          }
+        }else{loadTree();}
+      }
+    });
+  }
+  //enter event
+  $(".confirm-delete").keypress(function(event) {
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode == '13') {
+      $(".close-delete").trigger("click");
+    }
+  });
+  //delete
+  $(".close-delete").click(function() {
+    $(this).text("删除中");
+    var val = $(".confirm-delete").val();
+    if (val === "DEL") {
+//            deleteData = deleteData + "&del=true";
+      $.ajax({
+        type: "POST",
+        cache: false,
+        headers: {"cache-control": "no-cache"},
+        dataType: "json",
+        url: "/api/question/del_class",
+        data: deleteData + "&account="+user.account+"&companyId="+user.companyId + "&del=true",
+        success: function(msg) {
+            $(".close-delete").text("确定");
+            $("#delete-type").modal('hide');
+            alert(msg.desc);
+            loadTree();
+        }
+      });
+    } else {
+      $(".close-delete").text("确定");
+      alert("输入错误！无法执行删除操作");
+    }
+  });
+  //cancel
+  $(".rm-delete").click(function() {
+    $("#delete-type").modal('hide');
+  });
+  //    function onRemove(e, treeId, treeNode) {
+  //        loadTree();
+  //    }
+  function beforeRename(treeId, treeNode, newName, isCancel) {
+    className = (className === "dark" ? "":"dark");
+    $(".checkChangeStatus").val(1);
+    if (newName.length == 0) {
+      alert("节点名称不能为空.");
+      //如果为空，就把原来的值赋给input
+      $("#"+treeNode.tId+"_input").val(treeNode.name);
+      $(".checkChangeStatus").val(0);
+//            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+//            setTimeout(function(){zTree.editName(treeNode)}, 10);
+    }else if ($("#"+treeNode.tId+"_input").val() == treeNode.name){
+      //如果用户没有修改tree节点name，则不alert（'操作成功'）
+      $(".checkChangeStatus").val(0);
+    }
+    return true;
+  }
+  function onRename(e, treeId, treeNode, isCancel) {
+    if($(".checkChangeStatus").val() == 0){
+      treeNode.name=$("#"+treeNode.tId+"_input").val();
+    }
+    updateTreeNode(treeNode.pId,treeNode.id,treeNode.name);
+  }
+
+  var newCount = 1;
+  function addHoverDom(treeId, treeNode) {
+    if(treeNode.pId=='1'){
+      return false
+    }
+    var sObj = $("#" + treeNode.tId + "_span");
+    if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+    var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+      + "' title='add node' onfocus='this.blur();'></span>";
+    sObj.after(addStr);
+    var btn = $("#addBtn_"+treeNode.tId);
+    if (btn) btn.bind("click", function(){
+      var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+      var nodeId = 100 + newCount;
+      var name = "新分类" + (newCount++);
+      addTreeNode(treeNode,name,zTree);
+      return false;
+    });
+  };
+  function removeHoverDom(treeId, treeNode) {
+    $("#addBtn_"+treeNode.tId).unbind().remove();
+  };
+  //读取树数据
+  function loadTree(){
+
+      $.ajax({
+        type: "GET",
+        cache : false,
+        headers: { "cache-control": "no-cache" },
+        dataType: "json",
+        url: "/api/question/classification/" + user.account + "/" + user.companyId,
+        success: function(msg){
+          zNodes = msg;
+          if(zNodes.success == true){
+            var nodeList = []
+            var list = zNodes.bizContent
+            for(var i = 0,len = list.length;i<len;i++ ){
+              var temp = {}
+              temp["id"] = list[i].id
+              temp["name"] = list[i].name
+              temp["pId"] = list[i].pId
+              temp["open"] = list[i].open?true:false
+              temp["onlyRead"] = list[i].onlyRead
+              nodeList.push(temp)
+            }
+//                        zNodes.shift();
+            //初始化树
+            //              $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            // console.log(zNodes);
+            zTree=$.fn.zTree.init($("#treeDemo"), setting, nodeList);
+            var nodes = zTree.getNodes();
+            for(var i=0;i<nodes.length;i++){
+              zTree.expandNode(nodes[i],true);
+            }
+            checkTreeNode()
+          }else{
+            alert("读取数据失败，请联系管理员！");
+          }
+
+        }
+      });
+
+  };
+  loadTree();
+  //添加节点
+  function addTreeNode(treeNode,name,treeObj){
+    var dataForm = "pId="+treeNode.id+"&name="+name+"&account="+user.account+"&companyId="+user.companyId;
+    $.ajax({
+      type: "POST",
+      cache : false,
+      headers: { "cache-control": "no-cache" },
+      dataType: "json",
+      url: "/api/question/add_class",
+      data: dataForm,
+      success: function(msg){
+        if(msg.success == true){
+          var id = msg.bizContent.id;
+          treeObj.addNodes(treeNode, {id:id, pId:treeNode.id, name:name});
+        }else{
+          alert("操作失败，请联系管理员！");
+        }
+      }
+    });
+  }
+  //编辑节点
+  function updateTreeNode(pId,id,name){
+    var dataForm = "pId="+pId+"&id="+id+"&name="+name+"&account="+user.account+"&companyId="+user.companyId;
+    $.ajax({
+      type: "POST",
+      cache : false,
+      headers: { "cache-control": "no-cache" },
+      dataType: "json",
+      url: "/api/question/update_class",
+      data: dataForm,
+      success: function(msg){
+        if(msg.success == true){
+          //如果用户置空节点的name或者没有修改name，那么不alert
+          if($(".checkChangeStatus").val() != "0"){
+            alert("操作成功");
+          }
+        }else{
+          alert("操作失败，请联系管理员！");
+        }
+      }
+    });
+  }
+  //选择
+  $("#saveBtn").click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+    var nodes = zTree.getCheckedNodes(true);
+    var flag = -1;
+    for(var i = 0,len = nodes.length;i < len; i++){
+      (nodes[i].id == 1)&&(flag=i,len = i - 1)
+    }
+    flag>=0&&nodes.remove(flag)
+    var clickNodeChilds = nodes.length;
+    var ids = "";
+    var names = "";
+
+    for(i=0;i<clickNodeChilds;i++){
+      ids += nodes[i].id+",";
+      names += nodes[i].name+",";
+    }
+    if (ids == ''){
+      alert('请选择试题分类');
+    }else {
+      parent.selType(ids , names);
+      parent.hideSelType();
+    }
+
+  });
+  $("#closeBtn").click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    parent.hideSelType();
+  });
+
+  //如果有已选类型进行勾选操作
+  function checkTreeNode(){
+    var selIds = $(parent.document).find("input[name=classification]").val();
+    if(selIds!=""&&selIds!=undefined){
+      var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+      var list = selIds.split(",");
+      //list.pop();
+      $.each(list,function(index, value){
+        var node = zTree.getNodeByParam("id", value, null);
+        if(node!=null) {
+          zTree.checkNode(node, true, false);
+        }
+      });
+    }
+  }
+
+</script>
+
+
+</body></html>

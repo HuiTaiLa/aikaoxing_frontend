@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style class="vjs-styles-defaults">
+  </style>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/base/css/base.css?v=af1f18f7bb57">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/response.css?v=1e66103c3257">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/account/css/fill_user_info.css?v=65d4bb1bcf57">
+  <title>考试系统</title>
+</head>
+<body>
+<div class="spinner-wrapper hidden" id="spinnerLoading">
+  <div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="header-wrapper" style="display: none">
+
+    <div class="logo-wrapper">
+      <a href="#" title="logo">
+
+        <img class="icon-logo logo-ksx" src="/static/images/logo.jpg">
+      </a>
+    </div>
+
+  </div>
+
+  <div class="header-mobile" style="display: none">
+
+    <div class="back-icon">
+      <a class="m_logout" href="#">
+        <i class="icon icon-m_head_back"></i>
+      </a>
+    </div>
+
+  </div>
+
+
+  <div class="panel-block">
+
+    <div class="icon-logo" style="display: none;">
+      <img src="/static/images/logo.jpg">
+    </div>
+
+    <div class="title ellipsis">重置密码</div>
+
+    <form id="queryForm" method="post">
+      <div class="items">
+        <div class="item item-input item-account">
+          <span class="label-hint hintAccount" style="opacity: 0;">账号</span>
+          <input class="input" type="text" name="account" placeholder="请输入账号">
+        </div>
+
+        <div class="item item-input item-phone">
+          <span class="label-hint hintPhone" style="opacity: 0;">手机号</span>
+          <input class="input" type="text" name="phone" placeholder="请输入手机号">
+        </div>
+
+        <div class="item item-input item-captcha">
+          <span class="required">*</span>
+          <span class="label-hint hintCap" style="opacity: 0;">图形验证码</span>
+          <input class="input" type="text" name="captchaText" placeholder="图形验证码">
+          <img src="https://cdnoss.kaoshixing.com/ksx_prod/database/validationCode/20200317/1584408479958.jpg" id="captchaImg" class="captcha-img">
+        </div>
+      </div>
+    </form>
+
+    <div class="footer-row">
+      <span class="error-info hidden" id="errorInfo"></span>
+      <button type="button" class="btn btn-primary disabled" id="findPwdBtn">获取密码</button>
+    </div>
+
+  </div>
+
+</div>
+  <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+  <script type="text/javascript" src="/static/admin/login/js/login_setting.js"></script>
+  <script type="text/javascript">
+    var domain = "";
+    var key = "";
+  </script>
+<script type="text/javascript" src="/static/admin/find_pwd/js/find_pwd.js"></script>
+</body>
+</html>

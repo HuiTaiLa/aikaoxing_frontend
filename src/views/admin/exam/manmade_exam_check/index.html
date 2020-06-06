@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>考试系统</title>
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge,chrome=1" />
+    <link rel="shortcut icon" href="/static/images/logo.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta name="referrer" content="no-referrer"/>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+    <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=8a99822a8057">
+    <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/base/css/base.css?v=af1f18f7bb57">
+    <link rel="stylesheet" type="text/css" href="https://s2.kaoshixing.com/static/exam/css/exam_style.css?v=9e726aee4e57">
+    <link rel="stylesheet" href="https://s3.kaoshixing.com/static/plugins/honeySwitch/honeySwitch.css?v=fad37c172157">
+    <link rel="stylesheet" href="https://s5.kaoshixing.com/static/plugins/viewer/viewer.min.css?v=ec961a06f957">
+    <style>
+      .dis-box{
+        display: inline-block;
+        overflow: scroll;
+      }
+      .out-box{
+        display: block;
+      }
+      .pos-box{
+        position: relative;
+        display: inline-block;
+      }
+      .answers{
+        width: 90%;
+      }
+      .icon-pic{
+        background: #fff;
+        text-align: center;
+        border: 1px solid #D8D8D8 ;
+        color: #000;
+        border-radius: 4px;
+        width: 28px;
+        height: 28px;
+        margin-right: 4px;
+        box-shadow: 0 1px 4px 0 rgba(58,62,81,0.10);
+
+      }
+      .icon-pic:hover,.active{
+        color: #1A8CFE;
+      }
+      .question-content .filled .file-list .file-row,
+      .question-content .filled .keyCloze .file-row {
+        max-width: 100%;
+        min-width: 360px;
+        width: auto;
+        overflow: hidden;
+      }
+      .select-error-paper .right-question-content {
+        display: none!important;
+      }
+      .correct_commit{
+        margin-top: 20px;
+        /*padding-right: 140px;*/
+      }
+      .correct_commit_content{
+        height: 300px;
+        width:100%;
+        border: 1px solid #DEDEDE;
+        padding: 20px;
+        border-radius: 4px;
+      }
+
+      /*答题卡优化*/
+      #answercardFoldBtn{
+        display:none;
+      }
+      .numberCardModal{
+        left: 90px;
+      }
+      .nav-wrapper{
+        right: 90px;
+        bottom:20px;
+      }
+      .main{
+        padding: 90px 230px 80px 350px;
+      }
+      .nav-wrapper.nav-wrapper-l{
+        bottom:20px;
+      }
+      .modal-number-card .modal-body .card-content .box-list .box.s1 .iconBox{
+        border: 1px solid #DCDFE6;
+        color:#DCDFE6;
+      }
+      .insert-box .iconBox{
+        font-size:1px;
+      }
+
+      .modal-number-card .modal-header {
+        padding: 10px;
+      }
+      .numberCardModal .modal-number-card .modal-content .title{
+        margin-bottom: 0;
+      }
+      .numberCardModal .modal-number-card .modal-content .title .title_content{
+        margin-left: 14px;
+        font-weight: 600;
+        color: #27274A;
+      }
+      .modal-number-card .modal-body .card-content .card-content-title {
+        font-size: 12px;
+        color: #27274A;
+        font-weight: 600;
+      }
+      .modal-number-card .modal-body .card-content .box-list {
+        padding-bottom: 0;
+      }
+      .modal-number-card .iconBox{
+        font-weight: 600;
+      }
+      .position-left-0{
+        left: 0;
+      }
+      .action-comments {
+        position: absolute;
+        right: -180px;
+        font-size: 14px;
+        color: #1A8CFE;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+      }
+      .questions-detail .action-comments {
+        right: 50px;
+      }
+      .action-comments .icon {
+        display: inline-block;
+        font-size: 8px;
+        transform: rotate(0deg);
+        transition: all 0.5s;
+        margin-left: 3px;
+      }
+      .action-comments.active .icon {
+        transform: rotate(180deg);
+      }
+      .comments-box {
+        margin-top: 20px;
+        width: 100%;
+        margin-bottom: 25px;
+      }
+      .comments-box textarea {
+        width: 100%;
+        height: 150px;
+        border: 1px solid #DCDFE6;
+        border-radius: 4px;
+        padding: 20px;
+      }
+
+      textarea.error {
+        border: 1px solid red !important;
+      }
+      .comments-error-box {
+        opacity: 0;
+        position: fixed;
+        top: -40px;
+        left: 50%;
+        transform: translate(-50%,0%);
+        z-index: 1050;
+      }
+      .comments-error-tip {
+        width: 300px;
+        height: 40px;
+        background: rgba(254,133,69,0.10);
+        border: 1px solid rgba(254,133,69,0.20);
+        border-radius: 4px;
+        font-size: 14px;
+        color: #FE8545;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .comments-error-tip .icon {
+        font-size: 14px;
+        color: #FE8545;
+        margin-right: 10px;
+      }
+
+      .body-wrapper .paper {
+        padding-bottom: 30px;
+      }
+      img {
+        cursor: pointer;
+      }
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/plugins/katex/katex.min.css?v=27f0bd8419" />
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/katex/katex.min.js?v=c158c9e823"></script>
+    <script type="text/javascript" src="https://s4.kaoshixing.com/static/plugins/katex/contrib/auto-render.min.js?v=28cd0b98cd"></script>
+    <script type="text/javascript">
+      // 解析latex公式
+      function renderFormula(selector, flag){ //flag预留，以备用于区分不同处理
+        $(selector).each(function (index, element) {
+          if(!$(element).hasClass("rendered")){
+            var text = $(element).text();
+
+            katex.render(text, element, {
+              throwOnError: false
+            });
+
+            $(element).addClass("rendered");
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <!-- loading -->
+    <div class="spinner-wrapper" id="spinnerLoading">
+      <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+    <div id="index"></div>
+
+    <div class="modal fade" id="certificateModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-pc-message" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-title"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gray" data-dismiss="modal">暂不处理</button>
+            <button type="button" class="btn btn-danger" id="certificateBtn"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="comments-error-box">
+      <div class="comments-error-tip"><i class="icon icon-a_warning"></i>单个批改评语不能超过300字</div>
+    </div>
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-pc-message modal-logout" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-title">您是否要退出登录？</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger" id="confirmLogoutBtn">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      user = JSON.parse(window.localStorage.getItem("USER"));
+      var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+      var now = new Date()
+      var year = now.getFullYear().toString()
+      var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+      var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+      var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+      var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+      var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+      var nowTime = year+month+date+hour+minute+second
+      if(nowTime - expireTime >= -10){
+        window.location.href = "/admin/login?nextUrl=" + window.location.href
+      }
+    </script>
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+    <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+    <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+    <script type="text/javascript" src="/static/common/js/exam_base.js"></script>
+    <script type="text/javascript">
+      $.ajaxSetup({
+        contentType:"application/x-www-form-urlencoded;charset=utf-8",
+        headers:{
+          Authentication:JSON.parse(window.localStorage.getItem("USER_TOKEN"))
+        },
+        statusCode: {
+          404: function() {
+            window.location.href="/admin/error/404";
+          },
+          504: function() {
+            window.location.href="/admin/error/default";
+          },
+          500: function() {
+            window.location.href="/admin/error/default";
+          },
+          429:function () {
+            alert("您操作过于频繁！");
+          },
+          401:function () {
+            window.location.href="/admin/error/401";
+          },
+          400:function () {
+            window.location.href="/admin/error/400";
+          },
+          403:function () {
+            window.location.href="/admin/error/403";
+          },
+        }
+      });
+      var companyId = user.companyId; //公司id
+      var exam_info_id = getQueryString("examInfoId"); //考试ID
+      var exam_results_id = getQueryString("examResultsId"); //考试关联ID
+    </script>
+
+
+    <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/honeySwitch/honeySwitch.js?v=94e23bd13c57"></script>
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/viewer/viewer-jquery.min.js?v=79c7c67d3f57"></script>
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/stickUp/stickUp.min.js?v=125ba0241757"></script>
+    <!--<script type="text/javascript" src="https://s4.kaoshixing.com/static/exam/js/exam_check_results.js?v=dd810a961857"></script>-->
+    <script type="text/javascript">
+      var isWatermark = 0;
+    </script>
+  </body>
+</html>

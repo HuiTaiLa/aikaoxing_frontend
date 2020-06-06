@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+  <title>考试系统</title>
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+  <link rel="stylesheet" type="text/css" href="https://s5.kaoshixing.com/static/admin/css/question_import.css?v=9eb1bb48da57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/froala_editor/css/froala_editor.pkgd.min.css?v=e4a2f45bc957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/froala_editor/css/froala_style.min.css?v=5991575c8357">
+  <link rel="stylesheet" type="text/css" href="https://s3.kaoshixing.com/static/base/css/ksx-tab-base.css?v=05b914cf4a">
+  <style>
+    .textarea-group::after{
+      content: '';
+      background-image: url("https://s4.kaoshixing.com/static/admin/images/srq.png");
+      z-index: 0;
+      background-size: 240px 80px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 240px;
+      height: 80px;
+    }
+    .batch-preview-box::before{
+      content: '';
+      background-image: url("https://s2.kaoshixing.com/static/admin/images/jcq.png");
+      /*z-index: 99;*/
+      background-size: 240px 80px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 240px;
+      height: 80px;
+    }
+
+    /*样式优化*/
+    .blueBtn{
+      font-size: 12px!important;
+      background: rgba(26,140,254,0.10);
+      border: 1px solid rgba(26,140,254,0.20);
+      border-radius: 2px;
+      height: 28px;
+      line-height: 28px;
+      padding: 0 10px;
+      color: #1A8CFE;
+    }
+    .templatesBtn{
+      position:absolute;
+      right:232px;
+      padding: 0px 10px!important;
+      top: 16px;
+    }
+    .labelSheetBtn{
+      position:absolute;
+      right:125px;
+      padding: 0px 10px!important;
+      top: 16px;
+    }
+    .icon-a_word,.icon-a_label_outline,.icon-a_nav_help{
+      font-size: 14px;
+      vertical-align: text-bottom;
+    }
+    .not-open-label {
+      right: 20px;
+    }
+    /*禁止高亮区点击*/
+    #addQuestion1.introjs-showElement,
+    #addQuestion2.introjs-showElement,
+    #inputArea.introjs-showElement{
+      pointer-events: none;
+      cursor: default;
+      z-index: 99999999;
+    }
+    .introjs-helperLayer.addQuestion_img{
+      background-image: url("https://s0.kaoshixing.com/static/admin/images/add_question4.png");
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+      z-index: 99999999999999;
+    }
+    .addQuestion4{
+      position: absolute;
+      max-width: 1220px;
+      max-height: 480px;
+      width: 1120px;
+      height: 440px;
+      margin-left: 40px;
+    }
+  </style>
+  <style>
+    .el-tooltip__popper {
+      position: absolute;
+      border-radius: 4px;
+      padding: 10px;
+      z-index: 2000;
+      font-size: 12px;
+      line-height: 1.2;
+      min-width: 10px;
+    }
+    .el-tooltip__popper.is-dark {
+      background: #303133;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div id="index">
+</div>
+<script>
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login?nextUrl=" + window.location.href
+  }
+</script>
+  <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+  <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/froala_editor/js/froala_editor.pkgd.min.js?v=20e89f64e257"></script>
+  <script type="text/javascript" src="https://s0.kaoshixing.com/static/plugins/froala_editor/js/languages/zh_cn.js?v=25f4cb2559"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+  <script type="text/javascript" src="/static/admin/question_batch_import/js/admin_importQuestionsOnline.js"></script>
+  <script type="text/javascript" src="https://s2.kaoshixing.com/static/admin/js/auto-line-number-batch.js?v=a04ecf8c5357"></script>
+  <script type="text/javascript" src="https://s2.kaoshixing.com/static/plugins/markdown-v1.1.js?v=2b02a813f457"></script>
+</body>
+</html>

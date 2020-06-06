@@ -1,0 +1,532 @@
+<html><head>
+  <meta charset="utf-8">
+  <title>考试系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="shortcut icon" href="/static/images/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootgrid/jquery.bootgrid.css?v=34bb33548057">
+  <link rel="stylesheet" type="text/css" href="https://s3.kaoshixing.com/static/plugins/pikaday/pikaday.css?v=8e3f4c24fd57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/modal_content_style.css?v=5e0aae2c9a57">
+  <style>
+    .fade .in{display: none;}
+    .input-box {width: 200px;height: 24px;border: 1px solid #bfbfbf;vertical-align: middle;}
+    .btn-group .dropdown:last-child{
+      display: none;
+    }
+    a#selTypeLink {
+      display: inline-block;
+      border-radius: 4px;
+      width: 200px;
+      height: 28px;
+      line-height: 28px;
+      color: #666666;
+      background: #F5F5F5;
+    }
+    /*.tab-content .tab-pane .com-drop{*/
+    /*min-height: 600px;*/
+    /*}*/
+    /*选择分类弹窗优化*/
+    #typeModal{
+      display: none;
+      position: absolute;
+      top: 55px;
+      left: 300px;
+      width: 400px;
+      box-shadow: 0 0 4px 0 rgba(0,0,0,0.20);
+      background-color: #fff;
+      z-index: 999;
+      border-radius: 4px;
+    }
+    #typeModal .modal-dialog{
+      width: 100%!important;
+      box-shadow: unset;
+      margin: 0;
+    }
+    #typeModal .modal-content{
+      width: 100%;
+      box-shadow: unset;
+      padding: 0 5px;
+      border: unset;
+    }
+  </style>
+  <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+  @keyframes caretBlink {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+  }
+
+  @keyframes rotateSpinner {
+    from {
+      transform:rotate(0deg);
+    }
+    to {
+      transform:rotate(360deg);
+    }
+  }
+
+  #text-tool-caret {
+    animation-name: caretBlink;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    animation-duration: 1s;
+  }
+
+  #en-markup-loading-spinner {
+    position: absolute;
+    top: calc(50% - 16px);
+    left: calc(50% - 16px);
+    width: 32px;
+    height: 32px;
+  }
+
+  #en-markup-loading-spinner img {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    animation-name: rotateSpinner;
+    animation-duration: 0.6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  </style>
+  <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+.skitchToastBoxContainer {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 30px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  pointer-events: none;
+}
+
+.skitchToastBox {
+  width: 200px;
+  height: 16px;
+  padding: 12px;
+  background-color: rgba(47, 55, 61, 0.95);
+  border-radius: 4px;
+  color: white;
+  cursor: default;
+  font-size: 10pt;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.32);
+  font-family: 'Soleil', Helvetica, Arial, sans-serif;
+  border: 2px rgba(255, 255, 255, 0.38) solid;
+}
+
+.lang-zh-cn .skitchToastBox {
+  font-family: '微软雅黑', 'Microsoft YaHei', SimSun,
+  '&#x30E1;&#x30A4;&#x30EA;&#x30AA;', Meiryo, 'MS PGothic', 'Soleil',
+  Helvetica, Arial, sans-serif;
+}
+
+.lang-ja-jp .skitchToastBox {
+  font-family: '&#x30E1;&#x30A4;&#x30EA;&#x30AA;', Meiryo, 'MS PGothic',
+  '微软雅黑', 'Microsoft YaHei', SimSun, 'Soleil', Helvetica, Arial,
+  sans-serif;
+}
+
+.skitchToast {
+  padding-left: 20px;
+  padding-right: 20px;
+  display: inline-block;
+  height: 10px;
+  color: #f1f5f8;
+  text-align: center;
+}
+
+.skitchVisible {
+  /* Don't remove this class it's a hack used by the Evernote Clipper */
+}
+</style>
+  <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+
+@font-face {
+  font-family: 'Soleil';
+  font-weight: normal;
+  font-style: normal;
+}
+</style>
+  <style type="text/css">/* Copyright 2019-present Evernote Corporation. All rights reserved. */
+
+#en-markup-disabled {
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  cursor: default;
+  -webkit-user-select: none;
+}
+
+#en-markup-alert-container {
+  position: absolute;
+  z-index: 9999;
+  width: 450px;
+  left: calc(50% - 225px);
+  top: calc(50% - 85px);
+  background-color: white;
+  box-shadow: 0 2px 7px 1px rgba(0,0,0,0.35);
+  -webkit-user-select: none;
+}
+
+#en-markup-alert-container .cell-1 {
+  position: relative;
+  height: 110px;
+  width: 105px;
+  float: left;
+  text-align: center;
+  background-position: 65% 50%;
+  background-repeat: no-repeat;
+}
+
+#en-markup-alert-container .cell-2 {
+  position: relative;
+  float: left;
+  width: 345px;
+  margin-top: 29px;
+  margin-bottom: 20px;
+}
+
+#en-markup-alert-container .cell-2 .cell-2-title {
+  margin-bottom: 5px;
+  padding-right: 30px;
+  font-size: 12pt;
+  font-family: Tahoma, Arial;
+}
+
+#en-markup-alert-container .cell-2 .cell-2-message {
+  padding-right: 30px;
+  font-size: 9.5pt;
+  font-family: Tahoma, Arial;
+}
+
+#en-markup-alert-container .cell-3 {
+  position: relative;
+  width: 450px;
+  height: 60px;
+  float: left;
+  background-color: rgb(240,240,240);
+}
+
+#en-markup-alert-container .cell-3 button {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  width: 110px;
+  height: 36px;
+}
+
+#en-markup-alert-container .cell-3 button.alt-button {
+  position: absolute;
+  top: 12px;
+  right: 140px;
+  width: 110px;
+  height: 36px;
+}
+</style>
+</head>
+
+  <body>
+    <div>
+      <form action="/examadmin/admin/result/score_sel_exam" name="form" method="get" id="subForm">
+        <input type="hidden" class="" name="search" value="true">
+        <div class="topSelDiv">
+          <div class="topContent">
+            <div>
+              <div class="form-group">
+                <label>考试名称：</label>
+                <input type="text" class="modal_input input_nomal" name="exam_name">
+              </div>
+              <div class="form-group">
+                <label>考试分类：</label>
+                <a href="#" id="selTypeLink"><span>选择分类</span><i class="icons8-sort-filled" style="float: right;margin-right: 15px;"></i></a>
+                <input type="hidden" class="" name="exam_style" value="">
+                <input type="hidden" class="" name="exam_status" value="">
+              </div>
+              <div class="form-group">
+                <label>考试时间：</label>
+                <div class="btn-group">
+                  <div class="calendar"><em></em><input name="exam_start_time" type="text" id="dateForm"></div>
+                  <span style="font-size: 12px;color: #494949">到</span>
+                  <div class="calendar"><em></em><input name="exam_end_time" type="text" id="dateTo"></div>
+                </div>
+              </div>
+            </div>
+            <div class="toolbarBottom">
+              <a class="btn modal_btn_default btn_off" href="#" id="resetBtn">重置</a>
+              <a class="btn modal_btn_default btn_on" href="#" id="searchBtn">搜索</a>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-area tab-col2">
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active">
+                <div>
+                  <div class="rqm-table2 com-drop">
+                    <table id="grid-data" class="table table-condensed table-hover bootgrid-table" aria-busy="false">
+                      <thead>
+                        <tr>
+                          <th data-column-id="id" data-visible="false" data-identifier="true" data-formatter="id"></th>
+                          <th data-column-id="examName" data-sortable="false">考试名称</th>
+                          <th data-column-id="examStyleName"  data-sortable="false">分类</th>
+                          <th data-column-id="paperTotalScore" data-sortable="false">总分</th>
+                          <th data-column-id="examStartTime" data-sortable="false">开始时间</th>
+                          <th data-column-id="examEndTime" data-sortable="false">结束时间</th>
+                          <th data-column-id="createUserName" data-sortable="false">创建人</th>
+                          <th data-column-id="createTime" data-sortable="false">创建时间</th>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="buttonP" style="line-height: 60px;">
+            <a class="btn modal_btn_default btn_off" href="#" id="closeBtn">关闭</a>
+            <a class="btn modal_btn_default btn_on" href="#" id="saveBtn">确定</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div id="typeModal">
+      <div class="modal-dialog modal-small" role="document" style="width:500px">
+        <div class="modal-content">
+          <div class="modal-header">
+
+          </div>
+          <div class="modal-body">
+            <iframe width="100%" height="318px" name="selTypeModal" id="selTypeModal"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--
+    <div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">选择考试分类</h4>
+          </div>
+          <div class="modal-body">
+            <iframe width="100%" height="518px" src="/blank_about" style="border:0px" name="selTypeModal" id="selTypeModal"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    -->
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+    <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+    <script type="text/javascript" src="/static/common/plugins/bootgrid/jquery.bootgrid-ksx.js"></script>
+    <script type="text/javascript" src="https://s0.kaoshixing.com/static/admin/js/admin_main.js?v=a2964f524757"></script>
+    <script type="text/javascript" src="https://s0.kaoshixing.com/static/plugins/pikaday/moment.js?v=94dde4ec2657"></script>
+    <script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/pikaday/pikaday.js?v=5c81b2646857"></script>
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/pikaday/pikaday.jquery.js?v=67f9aeffb457"></script>
+    <script>
+      user = JSON.parse(window.localStorage.getItem("USER"))
+      var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+      var now = new Date()
+      var year = now.getFullYear().toString()
+      var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+      var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+      var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+      var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+      var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+      var nowTime = year+month+date+hour+minute+second
+      if(nowTime - expireTime >= -10){
+        window.location.href = "/admin/login?nextUrl=" + window.location.href
+      }
+    </script>
+    <script type="text/javascript">
+      $.ajaxSetup({
+        contentType:"application/x-www-form-urlencoded;charset=utf-8",
+        headers:{
+          Authentication:JSON.parse(window.localStorage.getItem("USER_TOKEN"))
+        },
+        statusCode: {
+          404: function() {
+            window.location.href="/admin/error/404";
+          },
+          504: function() {
+            window.location.href="/admin/error/default";
+          },
+          500: function() {
+            window.location.href="/admin/error/default";
+          },
+          429:function () {
+            alert("您操作过于频繁！");
+          },
+          401:function () {
+            window.location.href="/admin/error/401";
+          },
+          400:function () {
+            window.location.href="/admin/error/400";
+          },
+          403:function () {
+            window.location.href="/admin/error/403";
+          },
+        }
+      });
+      $(document).ready( function() {
+
+        //日历多语言
+        var datePikadayLang =  {
+          previousMonth : '上一月',
+          nextMonth     : '下一月',
+          months        : ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+          weekdays      : ['周日','周一','周二','周三','周四','周五','周六'],
+          weekdaysShort : ['周日','周一','周二','周三','周四','周五','周六']
+        };
+
+        //初始化日历控件
+        var $dateForm = $('#dateForm').pikaday({
+          firstDay: 1,
+          format: 'YYYY-MM-DD',
+          minDate: new Date('2000-01-01'),
+          maxDate: new Date('2020-12-31'),
+          yearRange: [2000,2030],
+          i18n: datePikadayLang
+        });
+        var $dateTo = $('#dateTo').pikaday({
+          firstDay: 1,
+          format: 'YYYY-MM-DD',
+          minDate: new Date('2000-01-01'),
+          maxDate: new Date('2020-12-31'),
+          yearRange: [2000,2030],
+          i18n: datePikadayLang
+        });
+
+        //全选
+        $(".checkAll").change(function(e) {
+          if($(this).is(":checked")){
+            $(".checkSimple").each(function(index, element) {
+              $(this).attr("checked" , "checked");
+            });
+          }else{
+            $(".checkSimple").each(function(index, element) {
+              $(this).removeAttr("checked");
+            });
+          }
+        });
+
+        //选择分类
+        $("body").on("click", "#selTypeLink", function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          showSelType(this);
+        });
+
+        //重置表单
+        $("#resetBtn").click(function(e) {
+          $("form[name=form]")[0].reset();
+          $("#selTypeLink span").text("选择分类");
+          $("input[name=exam_style]").val("");
+        });
+
+      });
+
+      //考试名称回车搜索
+      $("textarea[name=exam_name]").keydown(function(e) {
+        if (e.keyCode == 13) {
+          $("#grid-data").bootgrid("reload");
+          e.preventDefault();//必须在此位置阻止textarea默认的换行行为
+        }
+      })
+      //点击搜索
+      $("body").on("click", "#searchBtn", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $("#grid-data").bootgrid("reload");
+      });
+
+
+      //显示选择分类对话框
+      function showSelType(obj){
+        selTypeModal.location.href = "/admin/exam_add/exam_sel_style";
+        $('#typeModal').show();
+      }
+      //关闭选择分类对话框
+      function hideSelType(obj){
+        $('#typeModal').hide();
+      }
+      //接受选择分类数据
+      function selType(id,name){
+        $("input[name=exam_style]").val(id);
+        $("#selTypeLink span").text(name);
+      }
+      //接受考试选择
+      $("#saveBtn").click(function(e) {
+        $(".select-box").each(function(index, element) {
+          if($(this).is(":checked")){
+            var id = $(this).val();
+            parent.location.href = "/admin/result/mgr_new?examInfoId="+id
+            return;
+          }
+        });
+      });
+
+      //关闭对话框
+      $("#closeBtn").click(function(e) {
+        parent.hideSelType();
+      })
+
+    </script>
+    <script>
+      function test(){
+        $("#grid-data").bootgrid({
+          ajax: true,
+          ajaxSettings: {
+            method:"POST",
+            cache: false
+          },
+          post: function ()
+          {
+            var sortOrder = $("#grid-data").bootgrid("getSortDictionary");
+            var sortKey,sortName;
+            var examName = $("input[name=exam_name]").val();
+            var examStyle = $("input[name=exam_style]").val();
+            var examStatus = $("input[name=exam_status]").val();
+            var examStartTime = $("input[name=exam_start_time]").val();
+            var examEndTime = $("input[name=exam_end_time]").val();
+            $.each(sortOrder, function (name, value) {
+              sortKey = name;
+              sortName = value;
+            });
+            return {
+              "sortKey": sortKey,
+              "sortOrder": sortName,
+              "examName": examName,
+              "examStyle": examStyle,
+              "examStatus": examStatus,
+              "examStartTime": examStartTime,
+              "examEndTime": examEndTime,
+              "account": user.account,
+              "companyId":user.companyId
+            };
+          },
+          url: "/api/exam/mgr_grid/",
+
+          selection: true,
+          rowSelect: true,
+          navigation: 2,
+          paddind:1,
+          formatters: {
+            "id": function(column, row)
+            {
+              return "";
+            }
+          }
+        });
+      }
+      test();
+    </script>
+  </body>
+</html>

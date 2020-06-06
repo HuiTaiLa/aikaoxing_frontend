@@ -1,0 +1,50 @@
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>考试系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="shortcut icon" href="/static/images/logo.jpg">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s5.kaoshixing.com/static/admin/css/error_page_style.css?v=5f3f6ad903">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+</head>
+<body>
+<div id="wrap">
+  <div class="content text-center">
+    <img class="error-img" src="https://s6.kaoshixing.com/ksxing_static/website/base/error-tip-img.png" alt="">
+    <div class="error-info">当前请求异常</div>
+    <div class="btn-row">
+      <a id="back_home" href="javascript:void(0);">回到首页</a>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+<script type="text/javascript">
+  $(document).on("click","#back_home",function(){
+    if(window.name!=""){
+      parent.location.href="/depts/exam"
+    }
+    else{
+      window.location.href="/depts/exam"
+    }
+  })
+  // $(function(){
+  //   // 返回首页时 跳转到不同的域名
+  //   $.ajax({
+  //     type: "get",
+  //     cache : false,
+  //     dataType: "json",
+  //     url: "/index/account/back_home_url",
+  //     success: function(msg){
+  //       var backUrl = msg;
+  //       if(backUrl != undefined && backUrl != ""){
+  //         $("#back_home").attr("href",backUrl);
+  //       }
+  //     }
+  //   });
+  // })
+</script>
+
+
+
+</body></html>

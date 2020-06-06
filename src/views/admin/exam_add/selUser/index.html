@@ -1,0 +1,453 @@
+<html><head>
+  <meta charset="utf-8">
+  <title>考试系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="shortcut icon" href="/static/images/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=f66ad3317757">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootgrid/jquery.bootgrid.css?v=e0e011486657">
+  <link rel="stylesheet" type="text/css" href="https://s3.kaoshixing.com/static/plugins/pikaday/pikaday.css?v=8e3f4c24fd57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" href="https://s0.kaoshixing.com/static/base/css/modal_content_style.css?v=dc8373ade357">
+  <style>
+    .toolbarBottom{
+      clear: both;
+    }
+    a.sel-modal-btn {
+      display: inline-block;
+      vertical-align: middle;
+      width: 220px!important;
+      height: 28px;
+      line-height: 28px;
+      background: #F5F5F5;
+      border-radius: 4px;
+      text-align: center;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+    .sel-modal-btn span {
+      font-family: MicrosoftYaHei;
+      font-size: 12px;
+      color: #9090A4;
+    }
+    .btn-group .dropdown:last-child{
+      display: none;
+    }
+    .kw-show{
+      display:inline-block;
+    }
+    .search-keyword span{
+      display:inline-block;
+      font-size:15px;
+    }
+    .search-keyword .label{
+      margin:1px 1px;
+    }
+    #grid-data-footer {
+      padding: 10px 0 10px;
+    }
+    i.icons8-sort-filled {
+      float: right;
+      margin-right: 10px;
+      color: #9090A4;
+    }
+    .topSelDiv .topContent{
+      text-align: left;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  </style>
+</head>
+
+<body>
+<div>
+  <form action="/baseinfo/admin/addExam/selUser/" name="form" method="get" id="subForm">
+    <input type="hidden" class="" name="search" value="true">
+    <input type="hidden" class="" name="commit_ids">
+    <div class="topSelDiv">
+      <div class="topContent">
+        <div>
+          <div class="form-group">
+            <label>账号：</label>
+            <input type="text" class="modal_input input_item" name="user_name">
+          </div>
+          <div class="form-group">
+            <label>姓&nbsp;&nbsp;&nbsp;名：</label>
+            <input type="text" class="modal_input input_item" name="surname">
+          </div>
+          <div class="form-group">
+            <label>性别：</label>
+            <select name="sex" class="modal_select select_item">
+              <option value="" selected="">请选择</option>
+              <option value="1">男</option>
+              <option value="0">女</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label>状态：</label>
+            <select name="status" class="modal_select select_item">
+              <option value="" selected="">请选择</option>
+              <option value="0">正常</option>
+              <option value="1">禁用</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>部&nbsp;&nbsp;&nbsp;门：</label>
+            <a class="sel-modal-btn" href="#" id="selTypeLink">
+              <span>选择部门</span>
+              <i class="icons8-sort-filled"></i>
+            </a>
+            <input type="hidden" name="dep_id" value="">
+          </div>
+          <div class="form-group">
+            <label>职位：</label>
+            <input type="text" class="modal_input input_item" name="position">
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label>手机：</label>
+            <input type="text" class="modal_input input_item" name="phone">
+          </div>
+          <div class="form-group">
+            <label>证件号：</label>
+            <input type="text" class="modal_input input_item" name="identity">
+          </div>
+          <div class="form-group">
+            <label>邮箱：</label>
+            <input type="text" class="modal_input input_item" name="email">
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label>备注：</label>
+            <input type="text" class="modal_input input_item" name="notice">
+          </div>
+          <!--<div class="form-group">-->
+            <!--<label>标&nbsp;&nbsp;&nbsp;签：</label>-->
+            <!--<a class="sel-modal-btn" href="#" id="selUserLabelLink">-->
+              <!--<span>选择标签</span>-->
+              <!--<i class="icons8-sort-filled"></i>-->
+            <!--</a>-->
+            <!--<input type="hidden" name="userLabelIds" value="">-->
+          <!--</div>-->
+        </div>
+
+        <div class="toolbarBottom">
+          <a class="btn modal_btn_default btn_off" href="javascript:;" id="resetBtn">重置</a>
+          <a class="btn modal_btn_default btn_on" href="javascript:;" id="searchBtn">搜索</a>
+        </div>
+      </div>
+      <!-- <div class="title">
+          <span>共{{ sum }}个</span>
+      </div> -->
+      <div role="tabpanel" class="tab-area tab-col2">
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active">
+            <div class="rqm-table2 com-drop">
+              <table id="grid-data" class="table bootgrid-table" aria-busy="false">
+                <thead>
+                <tr>
+                <th data-column-id="id" data-visible="false" data-identifier="true" data-formatter="id"></th>
+                <th data-column-id="userName" data-sortable="false" data-width="100px">账号</th>
+                <th data-column-id="surname"  data-sortable="false" data-width=100px%">姓名</th>
+                <th data-column-id="departmentName" data-sortable="false" data-width="120px">所属部门</th>
+                <th data-column-id="email" data-sortable="false" data-width="150px">电子邮件</th>
+                <th data-column-id="sex" data-sortable="false" data-width="150px">性别</th>
+                <th data-column-id="status" data-sortable="false" data-width="150px">状态</th>
+                </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="buttonP">
+        <a class="btn modal_btn_default btn_off" href="#" id="closeBtn">关闭</a>
+        <a class="btn modal_btn_default btn_on" href="#" id="saveBtn">确定</a>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- modal -->
+<div id="typeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-small" role="document" style="margin:10px auto;z-index: 9999;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">选择部门</h4>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="518px" style="border:0px" name="selTypeModal" id="selTypeModal"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div id="userLabelModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+  <!--<div class="modal-dialog modal-small" role="document" style="margin:10px auto;z-index: 9999;">-->
+    <!--<div class="modal-content">-->
+      <!--<div class="modal-header">-->
+        <!--<h4 class="modal-title">选择标签</h4>-->
+      <!--</div>-->
+      <!--<div class="modal-body">-->
+        <!--<iframe width="100%" height="518px" style="border:0px" name="selLabelModal" id="selLabelModal"></iframe>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+<script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+<script type="text/javascript" src="/static/common/plugins/bootgrid/jquery.bootgrid-ksx.js"></script>
+<!--<script type="text/javascript" src="https://s4.kaoshixing.com/static/plugins/bootgrid/jquery.bootgrid-ksx.js?v=c7e1e8fb5957"></script>-->
+<script>
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login"
+  }
+</script>
+<script type="text/javascript">
+  (function ($) {
+    $(document).ready(function() {
+      if ($.isFunction($.bootstrapIE6)) $.bootstrapIE6($(document));
+    });
+  })(jQuery);
+</script>
+<script type="text/javascript">
+  $.ajaxSetup({
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",
+    headers:{
+      Authentication:JSON.parse(window.localStorage.getItem("USER_TOKEN"))
+    },
+    statusCode: {
+      404: function() {
+        window.location.href="/admin/error/404";
+      },
+      504: function() {
+        window.location.href="/admin/error/default";
+      },
+      500: function() {
+        window.location.href="/admin/error/default";
+      },
+      429:function () {
+        alert("您操作过于频繁！");
+      },
+      401:function () {
+        window.location.href="/admin/error/401";
+      },
+      400:function () {
+        window.location.href="/admin/error/400";
+      },
+      403:function () {
+        window.location.href="/admin/error/403";
+      },
+    }
+  });
+
+  var user = JSON.parse(window.localStorage.getItem("USER"));
+  $(document).ready(function() {
+    //选择部门
+    $("body").on("click", "#selTypeLink", function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      showSelType(this);
+    });
+    //选择标签
+    $("body").on("click", "#selUserLabelLink", function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      showSelUserlabel(this);
+    });
+    //搜索用户
+    $("#searchBtn").click(function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      $("#grid-data").bootgrid("reload");
+    });
+    //重置搜索
+    $("#resetBtn").click(function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      $("#selTypeLink span").text("选择部门");
+      $("#selUserLabelLink span").text("选择标签");
+      $("input[type=hidden]").val("");
+      $("#subForm")[0].reset();
+      $("input[name=search]").val("true");
+    });
+    var namesArray = [];
+
+    //save
+    $("#saveBtn").click(function(e) {
+      //todo 将选择的学员的ID与name以上述形式传递给父页面的函数
+      parent.selMuchUser(namesArray);
+      parent.hideSelUser();
+    });
+    //close
+    $("#closeBtn").click(function(e) {
+      parent.hideSelUser();
+    });
+    //filter
+    var selectedDeptEle = parent.window.document.getElementsByClassName("depidItem"),
+      selectedUserEle = parent.window.document.getElementsByClassName("useridItem"),
+      selected_dept = "",
+      selected_user = "";
+    //拼接选择部门的ID
+    $(selectedDeptEle).each(function(index,element) {
+      if ( index != $(selectedDeptEle).length - 1 ) {
+        selected_dept += $(this).text() + ",";
+      } else {
+        selected_dept += $(this).text();//1,2,3,4,5
+      }
+    });
+    //拼接选择学员的ID
+    $(selectedUserEle).each(function(index,element) {
+      if ( index != $(selectedUserEle).length - 1 ) {
+        selected_user += $(this).text() + ",";
+      } else {
+        selected_user += $(this).text();//1,2,3,4,5
+      }
+    });
+    //获取所有学员信息
+    $("#grid-data").bootgrid({
+      ajax: true,
+      ajaxSettings: {
+        method:"POST",
+        cache: false
+      },
+      url: "/api/dept/user_mgr_grid/",
+      selection: true,
+      multiSelect: true,
+      padding:1,
+      rowSelect: true,
+      // keepSelection:true,
+      navigation: 2,
+      post: function () {
+        var sortOrder = $("#grid-data").bootgrid("getSortDictionary");
+        var sortKey, sortOrderValue;
+        $.each(sortOrder, function (name, value) {
+          sortKey   = name;
+          sortOrderValue = value;
+        });
+        var userName = $("input[name=user_name]").val(),
+          surname = $("input[name=surname]").val(),
+          sex = $("select[name=sex]").val(),
+          status = $("select[name=status]").val(),
+          depId = $("input[name=dep_id]").val(),
+          position = $("input[name=position]").val(),
+          phone = $("input[name=phone]").val(),
+          identity = $("input[name=identity]").val(),
+          email = $("input[name=email]").val(),
+          notice = $("input[name=notice]").val(),
+          labelId = $("input[name=userLabelIds]").val();
+        return {
+          "sortKey": sortKey,
+          "sortOrder": sortOrderValue,
+          "userName": userName,
+          "surname": surname,
+          "sex": sex,
+          "status": status,
+          "departmentId": depId,
+          "position": position,
+          "phone": phone,
+          "identity": identity,
+          "email": email,
+          "notice": notice,
+          "userLabelIds": labelId,
+          "selectedDept": selected_dept,
+          "selectedUser": selected_user,
+          "examSelUser":"1",
+          "account":user.account,
+          "companyId":user.companyId
+        };
+      },
+    }).on("selected.rs.jquery.bootgrid", function (e,rows)
+    {
+      for (var i = 0; i < rows.length; i++)
+      {
+        namesArray.unshift([rows[i].id,rows[i].surname]);
+      }
+    }).on("deselected.rs.jquery.bootgrid", function (e,rows)
+    {
+      for (var i = 0; i < rows.length; i++) {
+        for (var j in namesArray){
+          if(namesArray[j][0]==rows[i].id){
+            delete namesArray[j];
+            break;
+          }
+        }
+      }
+    });
+  });
+  //显示选择部门对话框
+  function showSelType(obj){
+    selTypeModal.location.href = "/admin/exam_add/user_sel_dep_multi";
+    $('#typeModal').modal({
+      backdrop:"static",
+      keyboard:false
+    });
+  }
+  //关闭选择部门对话框
+  function hideSelDept(obj){
+    $('#typeModal').modal('hide');
+  }
+  //接受选择部门数据
+  function selDept(obj){
+    var idStr = "";
+    var nameStr = "";
+    $(obj).each(function(index , element) {
+      if (index != obj.length - 1) {
+        idStr += element.id + ",";
+        nameStr += element.name + ",";
+      } else {
+        idStr += element.id;
+        nameStr += element.name;
+      }
+    });
+    $("input[name=dep_id]").val(idStr);
+    $("#selTypeLink span").text(nameStr);
+  }
+
+  //显示选择学员标签对话框
+  function showSelUserlabel(obj) {
+    selLabelModal.location.href = "/baseinfo/admin/tree/multi_user_label";
+    $('#userLabelModal').modal();
+  }
+
+  //关闭选择学员标签对话框
+  function hideSelUserlabel(obj) {
+    $('#userLabelModal').modal('hide');
+    selLabelModal.document.body.innerHTML = "";
+  }
+
+  //接受选择学员标签的数据
+  function selUserLabel(id, labelsArray) {
+    var nameStr = "";
+
+    $("input[name=userLabelIds]").val(id);
+    $.each(labelsArray, function (index, value) {
+      nameStr += value[1] + ","
+    });
+    $("#selUserLabelLink span").text(nameStr);
+  }
+
+</script>
+<script type="text/javascript" src="https://s0.kaoshixing.com/static/admin/js/admin_main.js?v=a2964f524757"></script>
+
+
+
+</body>
+</html>

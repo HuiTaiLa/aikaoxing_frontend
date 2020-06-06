@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+    <title>考试系统</title>
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+    <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+    <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootgrid/jquery.bootgrid.css?v=e0e011486657">
+    <link rel="stylesheet" type="text/css" href="https://s2.kaoshixing.com/static/base/css/cannotlink_modal.css?v=ab38662ed857">
+    <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/admin/css/link_img_download.css?v=70ad0e7aae57">
+    <link rel="stylesheet" href="https://s0.kaoshixing.com/static/plugins/laydate-new/theme/default/laydate.css?v=5.0.85" id="layuicss-laydate">
+    <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+    @keyframes caretBlink {
+      from { opacity: 1.0; }
+      to { opacity: 0.0; }
+    }
+
+    @keyframes rotateSpinner {
+      from {
+        transform:rotate(0deg);
+      }
+      to {
+        transform:rotate(360deg);
+      }
+    }
+
+    #text-tool-caret {
+      animation-name: caretBlink;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+      animation-duration: 1s;
+    }
+
+    #en-markup-loading-spinner {
+      position: absolute;
+      top: calc(50% - 16px);
+      left: calc(50% - 16px);
+      width: 32px;
+      height: 32px;
+    }
+
+    #en-markup-loading-spinner img {
+      position: relative;
+      top: 0px;
+      left: 0px;
+      animation-name: rotateSpinner;
+      animation-duration: 0.6s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+    </style>
+    <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+    .skitchToastBoxContainer {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 30px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      pointer-events: none;
+    }
+
+    .skitchToastBox {
+      width: 200px;
+      height: 16px;
+      padding: 12px;
+      background-color: rgba(47, 55, 61, 0.95);
+      border-radius: 4px;
+      color: white;
+      cursor: default;
+      font-size: 10pt;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.32);
+      font-family: 'Soleil', Helvetica, Arial, sans-serif;
+      border: 2px rgba(255, 255, 255, 0.38) solid;
+    }
+
+    .lang-zh-cn .skitchToastBox {
+      font-family: '微软雅黑', 'Microsoft YaHei', SimSun,
+      '&#x30E1;&#x30A4;&#x30EA;&#x30AA;', Meiryo, 'MS PGothic', 'Soleil',
+      Helvetica, Arial, sans-serif;
+    }
+
+    .lang-ja-jp .skitchToastBox {
+      font-family: '&#x30E1;&#x30A4;&#x30EA;&#x30AA;', Meiryo, 'MS PGothic',
+      '微软雅黑', 'Microsoft YaHei', SimSun, 'Soleil', Helvetica, Arial,
+      sans-serif;
+    }
+
+    .skitchToast {
+      padding-left: 20px;
+      padding-right: 20px;
+      display: inline-block;
+      height: 10px;
+      color: #f1f5f8;
+      text-align: center;
+    }
+
+    .skitchVisible {
+      /* Don't remove this class it's a hack used by the Evernote Clipper */
+    }
+    </style>
+    <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+
+    @font-face {
+      font-family: 'Soleil';
+
+      font-weight: normal;
+      font-style: normal;
+    }
+    </style>
+    <style type="text/css">/* Copyright 2019-present Evernote Corporation. All rights reserved. */
+
+    #en-markup-disabled {
+      position: fixed;
+      z-index: 9999;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+      cursor: default;
+      -webkit-user-select: none;
+    }
+
+    #en-markup-alert-container {
+      position: absolute;
+      z-index: 9999;
+      width: 450px;
+      left: calc(50% - 225px);
+      top: calc(50% - 85px);
+      background-color: white;
+      box-shadow: 0 2px 7px 1px rgba(0,0,0,0.35);
+      -webkit-user-select: none;
+    }
+
+    #en-markup-alert-container .cell-1 {
+      position: relative;
+      height: 110px;
+      width: 105px;
+      float: left;
+      text-align: center;
+
+      background-position: 65% 50%;
+      background-repeat: no-repeat;
+    }
+
+    #en-markup-alert-container .cell-2 {
+      position: relative;
+      float: left;
+      width: 345px;
+      margin-top: 29px;
+      margin-bottom: 20px;
+    }
+
+    #en-markup-alert-container .cell-2 .cell-2-title {
+      margin-bottom: 5px;
+      padding-right: 30px;
+      font-size: 12pt;
+      font-family: Tahoma, Arial;
+    }
+
+    #en-markup-alert-container .cell-2 .cell-2-message {
+      padding-right: 30px;
+      font-size: 9.5pt;
+      font-family: Tahoma, Arial;
+    }
+
+    #en-markup-alert-container .cell-3 {
+      position: relative;
+      width: 450px;
+      height: 60px;
+      float: left;
+      background-color: rgb(240,240,240);
+    }
+
+    #en-markup-alert-container .cell-3 button {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      width: 110px;
+      height: 36px;
+    }
+
+    #en-markup-alert-container .cell-3 button.alt-button {
+      position: absolute;
+      top: 12px;
+      right: 140px;
+      width: 110px;
+      height: 36px;
+    }
+    </style>
+    <style>
+      .el-tooltip__popper {
+        position: absolute;
+        border-radius: 4px;
+        padding: 10px;
+        z-index: 2000;
+        font-size: 12px;
+        line-height: 1.2;
+        min-width: 10px;
+      }
+      .el-tooltip__popper.is-dark {
+        background: #303133;
+        color: #fff;
+      }
+    </style>
+    <style type="text/css">
+      .viewFrameWork-body .body-wrapper .body-content{
+        padding-right: 15px;
+      }
+      .user_info{cursor:pointer;}
+      #top a{
+        text-decoration:none;
+      }
+      .modal-unify{width: initial;}
+      /*本页面最后一个icon提示信息显示不完全，所以调整提示位置*/
+      .linkScore:hover:after{padding:5px 10px;position: absolute;right: 45px;}
+      /*.dropdown-menu {min-width: 100px;}*/
+      #export_msg{position:absolute;top:40%;left:50%;display:none;z-index:3;}
+
+      /*.text-left:last-child{*/
+      /*text-align: center;*/
+      /*}*/
+
+      span.search-menu-title {
+        display: inline-block;
+        padding-right: 6px;
+        font-family: MicrosoftYaHei;
+        font-size: 12px;
+        color: #494949;
+      }
+      .adv-search-row {
+        margin-top: 4px;
+      }
+      .search-section-area::-webkit-input-placeholder{
+        color: #d8d8d8;
+      }
+      .search-section-area::-moz-input-placeholder{
+        color: #d8d8d8;
+      }
+      .search-section-area:-ms-input-placeholder{
+        color: #d8d8d8;
+      }
+
+
+      .body-addition{
+        position: relative;
+      }
+      div#guide-first {
+        position: absolute;
+        top: 0;
+        left: 9%;
+        z-index:9999;
+      }
+      #okModal .modal-body .guide { display: -webkit-flex;display: flex;justify-content: center;margin: auto;margin-top: 64px;  text-align: center;}
+      #okModal .modal-body .guide-pwd {margin-top: 30px}
+      #okModal .modal-body .guide .address {border: 1px solid #DEDEDE;padding: 6px 15px 6px 10px;border-right: none;text-align: left;display: inline-block;border-radius: 4px;}
+      #okModal .modal-body .guide .btn-copy {  font-family: MicrosoftYaHei;  font-size: 14px;  color: #1A8CFE;  line-height: 8px;  position: relative;  left: -5px;  padding: 0 16px; }
+      #okModal .modal-body .qr-code {  text-align: center;  margin-top: 35px;  }
+      #okModal .modal-body .qr-code .btn-group .btn-download{  font-family: MicrosoftYaHei;  font-size: 14px;  color: #2F7CDB;  letter-spacing: -0.4px;  padding: 9px 22px;  }
+      #okModal .modal-body .qr-code .download-qrcode {display: inline-block;  vertical-align: middle;text-align: left;}
+      #okModal .modal-body .qr-code .invite-link-qrcode {display: inline-block;  vertical-align: middle;margin-right: 20px;}
+      #okModal .modal-body .sendForm {margin-top: 25px; text-align: center;  font-family: MicrosoftYaHei;  font-size: 16px;  color: #666666;  letter-spacing: 0;position: relative}
+      #okModal .modal-body .sendForm input {vertical-align: text-top}
+      #okModal .modal-body .btn-div { margin-top: 60px;  text-align: center;  margin-bottom: 25px;}
+      #okModal .modal-body .btn-div button {margin-right: 14px;width: 100px}
+      /*#okModal .modal-body .btn-div span { width: 100px;  height: 34px;  line-height: 34px;  padding: 0;  color: #ffffff; }*/
+      /*发布成功以及邮件提醒*/
+      .sendAnimation{display: none;}
+      .sendAnimation.sendTips {position: fixed; left:0;right:0; z-index: 9999;  width: 400px;  height: 30px;  font-size: 14px;  color: #666;  background: #F5DBCE;  text-align: center;  border-radius: 4px;  margin: 0 auto;line-height: 30px;animation:sendTips 0.8s linear;-webkit-animation:sendTips 0.8s linear;animation-iteration-count:1;
+        -webkit-animation-iteration-count:1;animation-fill-mode:forwards;-webkit-animation-fill-mode:forwards }
+      #animationLoading {position: fixed}
+      @keyframes sendTips {
+        from {top:0;}
+        to {top:20px;}
+      }
+      @-webkit-keyframes sendTips {
+        from {top:0;}
+        to {top:20px;}
+      }
+      div#grid-data-footer{position: absolute;bottom: 0;width: 100%;height: 60px; padding-top:11px; background: #fff;margin-bottom: 0;}
+      table#grid-data {padding-bottom: 60px;}
+      #grid-data-footer .row .infoBar .actions .btn-group:last-child .dropdown-menu {top: -260px;}
+      /*提示框样式*/
+      .help-tips {
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        background: #9090A4;
+        border-radius: 50%;
+        color: #fff;
+        text-align: center;
+        position: absolute;
+        right: 230px;
+        cursor: pointer;
+        font-style: normal;
+        top: 5px;
+        font-size: 12px;
+        padding-left: 1px;
+        line-height: 14px;
+      }
+      .help-tips .notificationTips {
+        width: 342px;
+        border: 1px solid #DDD;
+        background: #fff;
+        text-align: left;
+        padding: 10px 17px 15px;
+        position: absolute;
+        top: 5px;
+        right: -350px;
+        line-height: 20px;
+        color: #777;
+        transition: 1s;
+        cursor: auto;
+        opacity: 0;
+        font-size: 13px;
+        visibility: hidden;
+      }
+      .help-tips .notificationTips > p {
+        font-size: 12px;
+        color: #4A4A4A;
+        line-height: 20px;
+      }
+      .help-tips .notificationTips > div {
+        position: relative;
+      }
+      .help-tips .notificationTips h4 {
+        margin: 0 0 10px 0;
+        font-size: 12px;
+        color: #2F7CDB;
+      }
+      .help-tips:hover .notificationTips {
+        opacity: 1;
+        visibility: visible;
+      }
+      .help-tips .notificationTips img {width: 100%}
+      .help-tips .notification {
+        position: absolute;
+        font-size: 12px;
+        left: 50%;
+        width: 280px;
+        color: #fff;
+        top: 50%;
+        transform: translate(-50%,-50%);
+      }
+      .help-tips .notification > p {
+        margin: 0;
+      }
+      /*bootstrap-dialog 模态框样式*/
+      .bootstrap-dialog .modal-dialog {
+        width: 425px;
+      }
+      .bootstrap-dialog .modal-header{
+        border-bottom: 0;
+      }
+      .bootstrap-dialog .modal-footer{
+        border-top: 0;
+        margin: 15px 0;
+      }
+      #searchStateModal .examinee-account {
+        width: 291px;
+        height: 34px;
+        padding: 0 10px;
+        font-size: 12px;
+        color: #27274A;
+        border: 1px solid #D8D8D8;
+        border-radius: 4px;
+      }
+      /*input 中placeholder样式*/
+      #searchStateModal ::-webkit-input-placeholder { /* WebKit browsers */
+        color: #C1C1CB;
+      }
+      #searchStateModal :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color: #C1C1CB;
+      }
+      #searchStateModal ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color: #C1C1CB;
+      }
+      #searchStateModal :-ms-input-placeholder { /* Internet Explorer 10+ */
+        color: #C1C1CB;
+      }
+      #searchStateModal .search-tip {
+        font-size: 14px;
+        color: #656577;
+        margin: 0;
+        margin-top: 10px;
+      }
+      .btn-primary i{
+        font-size: 13px !important;
+        vertical-align: inherit;
+      }
+      .export_dialog .modal-content .modal-header{
+        display: none;
+      }
+      .export_dialog .bootstrap-dialog-message{
+        font-size: 20px;
+        color: #27274A;
+      }
+      .export_dialog .modal-body{
+        padding-top: 50px!important;
+      }
+      .export_dialog .modal-footer{
+        border-top: 0;
+        margin: 32px;
+        padding: 0;
+      }
+      .export_dialog .export_no,
+      .export_dialog .export_yes{
+        width: 100px;
+        height: 34px;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-left: 14px !important;
+      }
+      .export_dialog .export_no{
+        background: #F2F2F2;
+        color: #666666;
+        border-color: #F2F2F2;
+      }
+      .export_dialog .export_yes{
+        background: #1A8CFE;
+        color: #FFFFFF;
+      }
+      .export_dialog .modal-dialog,
+      .export_dialog .modal-content{
+        width: 440px;
+        height: 176px;
+        border: none;
+      }
+      #exportModal .modal-dialog{
+        margin-top: 15%!important;
+      }
+      #exportModal .modal-content,
+      #exportModal .modal-dialog{
+        width: 440px;
+        border: none;
+      }
+      #exportModal .modal-title{
+        font-size: 20px;
+        color: #27274A;
+        line-height: 1;
+      }
+      #exportModal .modal-footer{
+        border-top: none;
+        height: 98px;
+        padding: 32px 0;
+      }
+      #exportModal .modal-footer button{
+        width: 100px;
+        height: 34px;
+        border: 1px solid #F2F2F2;
+        background: #F2F2F2;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #666666;
+      }
+      .delete_dialog .close,
+      .cannot_delete .close {
+        display: none;
+      }
+      #exportModal .modal-header,
+      .cannot_delete .modal-header,
+      .delete_dialog .modal-header{
+        border-bottom: none;
+        height: 70px;
+        font-size: 20px;
+        color: #27274A;
+        padding: 50px 0 0;
+      }
+      .cannot_delete .bootstrap-dialog-title,
+      .delete_dialog .bootstrap-dialog-header{
+        line-height: 1;
+      }
+
+      #exportModal .modal-body,
+      .cannot_delete .modal-body{
+        margin-top: 18px;
+      }
+      .delete_dialog .modal-body{
+        height: 80px;
+        font-size: 14px;
+        color: #999999;
+        margin-top: 18px;
+      }
+      .cannot_delete .modal-footer,
+      .delete_dialog .modal-footer{
+        margin: 32px 0;
+        padding: 0;
+      }
+      .delete_dialog .delete_yes,
+      .delete_dialog .delete_no{
+        width: 100px;
+        height: 34px;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      .delete_dialog .delete_no{
+        border: 1px solid #F2F2F2;
+        background: #F2F2F2;
+        color: #666666;
+      }
+      .delete_dialog .delete_yes{
+        background: #FF0000;
+        border-radius: 4px;
+        border: 1px solid #FF0000;
+        color: #FFFFFF;
+        margin-left: 14px !important;
+      }
+      .cannot_delete .cannot_delete_yes{
+        width: 100px;
+        height: 34px;
+        background: #FF4B50 !important;
+        border-radius: 4px;
+        border: 0px solid #F2F2F2;
+        font-size: 14px;
+        color: #ffffff !important;
+      }
+      .exam_top_modal .modal-dialog{
+        width: 500px;
+        margin-top: 15%;
+      }
+      .exam_top_modal .modal-footer{
+        text-align: center;
+        padding: 32px 0 32px;
+      }
+      .exam_top_modal .modal-body{
+        padding: 18px 40px 0px 40px!important;
+        color: #999999;
+        text-align: center;
+      }
+      /*.exam_top_modal .current_top_exam{*/
+      /*    margin-top: 30px;*/
+      /*}*/
+      /*表格滑动-滚动条被分页器遮挡住了，需要调整让滚动条出现*/
+      #grid-data{
+        padding-bottom:unset!important; /*去掉60px的底部填充*/
+      }
+      #grid-data-footer{
+        bottom:-60px!important; /*分页器也随着下移60px的底部距离*/
+      }
+      .select-label{ /*设置不换行后，勾选框的边距消失，需要再设置*/
+        margin: 0 14px!important;
+      }
+      .icon-a_circle_plus.btn-icon-left,.icon.icon-a_btn_top,.icon.icon-a_btn_classify{
+        font-size:14px!important;
+      }
+      .icon.icon-a_btn_top,.icon.icon-a_btn_classify{
+        position: relative;
+        top: 1px;
+      }
+      .table>tbody>tr>td a.expandExamName {
+        font-size: 14px;
+        color: #605C5D;
+      }
+      .table>tbody>tr>td a.jumpProcess {
+        font-size: 14px;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="index">
+    </div>
+    <div class="modal fade modal-unify" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+      <div class="modal-dialog modal-small" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title exam-classify">选择考试分类</h4>
+          </div>
+          <div class="modal-body">
+            <iframe width="100%" height="518px" style="border:0px" name="selTypeModal" id="selTypeModal"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade ksx-modal exam_top_modal" id="examTopModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">置顶考试</h4>
+          </div>
+          <div class="modal-body">
+            <p>最多可选三场考试，再次提交将覆盖上次置顶的考试，学员端的当前考试列表中置顶显示，学员将优先看到置顶考试。</p>
+            <p class="current_top_exam">(当前置顶：<span>考试示例</span>)</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-gray" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="setExamTop">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="okModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+      <div class="modal-dialog modal-share" role="document">
+
+
+
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="left_container">
+
+
+              <div class="linkImgDownLoad">
+                <div class="content">
+                  <div class="logo">
+                    <img class="icon-logo logo-ksx" src="/static/images/logo.jpg"></div>
+                  <div class="title currentThemeBackgroundColor">
+                    <div class="title_container">
+                      <div class="invite"><div class="white_line"></div>邀请你参加<span class="activity_type"></span><div class="white_line"></div></div>
+                      <div class="title_content"></div>
+                    </div>
+                  </div>
+                  <div class="time">
+                    <div class="start_time">开始时间：<span></span></div>
+                    <div class="end_time">结束时间：<span></span></div>
+                    <div class="exam_time">考试时长：<span></span></div>
+                  </div>
+                  <div class="qr_code">
+                    <div class="code_img"><canvas width="150" height="150"></canvas></div>
+                    <div class="tip">识别二维码参加<span class="activity_type"></span></div>
+                  </div>
+                </div>
+                <div class="half_circle left"></div>
+                <div class="half_circle right"></div>
+                <div class="left_triangle"></div>
+                <div class="right_triangle"></div>
+              </div>
+
+            </div>
+            <div class="right_container">
+              <div class="link_title">考试链接</div>
+              <div class="guide">
+                <span class="address"><span class="tip_title link_tip_title">考试地址</span><div id="exam_url"></div></span>
+                <button type="button" data-clipboard-target="#exam_url" class="btn btn-default btn-copy link_copy_btn" id="copyUrlBtn"><i class="icon-a_operate_copy"></i>复制链接</button>
+              </div>
+              <div step="6" class="guide guide-pwd hidden">
+                <span class="address"><span class="tip_title">考试密码：</span><div id="exam_password"></div></span>
+                <button type="button" class="btn btn-default btn-copy" id="copyPasswordLink" data-clipboard-target="#exam_password"><i class="icon-a_operate_copy"></i>复制密码</button>
+              </div>
+              <!--<form action="/examadmin/admin/exam_notice/" name="form" method="post" id="sendForm" class="sendForm hidden">-->
+                <!--<span class="tip_title">发送考试通知</span>-->
+                <!--<i class="help-tips">-->
+                  <!--?-->
+                  <!--<div class="notificationTips">-->
+                    <!--<h4>什么是"发送考试通知"?</h4>-->
+                    <!--<p>将会发送考试的日期、时间、考试名称和考试链接给学员。支持对已验证邮箱的学员发送邮件,和对已预留手机号的学员发送短信,如无学员联系方式,将无法送达。发送短信时,第三方供应商将会收取一定的费用。<a href="/account/admin_pay_center">去充值-&gt;</a></p>-->
+                    <!--<div>-->
+                      <!--<img src="https://s5.kaoshixing.com/static/admin/images/SMS_notification.png">-->
+                      <!--<div class="notification">-->
+                        <!--<p class="notificationContent"></p>-->
+                        <!--<p class="notificationUrl"></p>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</i>-->
+                <!--<br>-->
+                <!--<input name="sendEmail" type="checkbox" id="email" class="email" value="1">-->
+                <!--邮件&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <!--<input name="sendMessage" type="checkbox" id="message" class="message" value="1">-->
+                <!--短信-->
+
+              <!--</form>-->
+              <div class="btn-div">
+                <div class="btn-group">
+                  <a type="button" class="btn-download linkImgDownLoadBtn" download="下载.png" href="">
+                    下载图片
+                  </a>
+                </div>
+                <button class="btn btn-warning" id="trialExamBtn" disabled></button>
+                <button type="button" class="btn btn-primary btnOk" id="confirmOkBtn" data-dismiss="modal">确定</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="linkImgDownLoad">
+      <div class="content">
+        <div class="logo">
+          <img class="icon-logo logo-ksx" src="/static/images/logo.jpg"></div>
+        <div class="title currentThemeBackgroundColor">
+          <div class="title_container">
+            <div class="invite"><div class="white_line"></div>邀请你参加<span class="activity_type"></span><div class="white_line"></div></div>
+            <div class="title_content"></div>
+          </div>
+        </div>
+        <div class="time">
+          <div class="start_time">开始时间：<span></span></div>
+          <div class="end_time">结束时间：<span></span></div>
+          <div class="exam_time">考试时长：<span></span></div>
+        </div>
+        <div class="qr_code">
+          <div class="code_img"><canvas width="150" height="150"></canvas></div>
+          <div class="tip">识别二维码参加<span class="activity_type">考试</span></div>
+        </div>
+      </div>
+      <div class="half_circle left"></div>
+      <div class="half_circle right"></div>
+      <div class="left_triangle"></div>
+      <div class="right_triangle"></div>
+    </div>
+    <script>
+      var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+      var now = new Date()
+      var year = now.getFullYear().toString()
+      var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+      var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+      var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+      var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+      var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+      var nowTime = year+month+date+hour+minute+second
+      if(nowTime - expireTime >= -10){
+        window.location.href = "/admin/login?nextUrl=" + window.location.href
+      }
+    </script>
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+    <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+    <script type="text/javascript" src="/static/common/plugins/bootgrid/jquery.bootgrid-ksx.js"></script>
+    <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+    <script type="text/javascript" src="https://s0.kaoshixing.com/static/plugins/laydate-new/laydate.js?v=69d16c441057"></script>
+    <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+    <script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/colResizable-1.6.min.js?v=031048987157"></script>
+    <script src="https://s4.kaoshixing.com/static/plugins/createdPicture/html2canvas.js?v=418889293e"></script>
+    <script type="text/javascript" src="https://s2.kaoshixing.com/static/plugins/jquery.qrcode.min.js?v=043049667957"></script>
+    <script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/clipboard/clipboard.min.js?v=3e5e0fa94957"></script>
+    <script>
+      // 复制考试链接
+      var clipboard = new Clipboard('.btn-copy');
+      clipboard.on('success', function(e) {
+        alert("复制成功!");
+      });
+      clipboard.on('error', function(e) {
+        alert("复制失败,请重试");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+  <link rel="stylesheet" type="text/css" href="https://s5.kaoshixing.com/static/account/css/admin_information.css?v=fb66b8b44c57">
+  <title>考试系统</title>
+  <style>
+    .el-tooltip__popper {
+      position: absolute;
+      border-radius: 4px;
+      padding: 10px;
+      z-index: 2000;
+      font-size: 12px;
+      line-height: 1.2;
+      min-width: 10px;
+    }
+    .el-tooltip__popper.is-dark {
+      background: #303133;
+      color: #fff;
+    }
+  </style>
+  <style>
+    .userUpdateDom, #updateBtnDom{display:none;}
+    .checkbox, .radio {display: inline-block; width:20px !important;}
+    .wechat-icon{cursor: pointer;color: #337ab7;}
+    .upload{display: inline-block;width: 62px;padding: 0;border: 1px solid #bbb;cursor: pointer;}
+    .upload input{width: 62px;height: 24px;position: absolute;opacity: 0;filter: alpha(opacity=0);}
+    .upload:hover:after{content: attr(title_tip);padding:5px 10px;line-height: 18px;text-align: left;margin: 15px 5px;color: #fff;position: absolute;z-index: 20;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;
+      -moz-box-shadow: 0px 0px 4px #222;-webkit-box-shadow: 0px 0px 4px #222;
+      box-shadow: 0px 0px 4px #222;
+      background-color: #444;opacity: 0.7;filter:alpha(opacity=70);
+    }
+    input[name=sex]{margin: 0!important;}
+
+    #we_bind{position: relative;}
+    #we_bind .prompt_red{position: absolute;top: 2px;left: 78px;background: #FF7E3B;display: inline-block;height: 7px;width: 7px;border-radius: 50%;}
+
+
+    .bind_wrapper{text-align: center;box-shadow: 0 0 10px 0 rgba(0,0,0,0.10);}
+    .bind_wrapper .modal-backdrop{height: 100%!important;}
+    .bind_wrapper .modal-bind .modal-content{padding:0;}
+    #bindModal{overflow-y: hidden}
+    .bind_wrapper .modal-header{height: 50px;border-bottom: 1px solid #dedede;}
+    .bind_wrapper .bind_wrapper_header .close .icons8-delete{font-size: 20px;position: absolute;top: 5px;right: -2px;}
+    .bind_wrapper .bind_wrapper_content .btn_bind{background: #1A8CFE;box-shadow: 0 1px 2px 0 rgba(0,0,0,0.10);border-radius: 4px;color: #fff;display: inline-block;height: 34px;line-height: 34px;text-decoration: none;}
+    .bind_wrapper .bind_wrapper_content .bind_prompt{font-family: PingFangSC-Regular;color: #666666;}
+    .bind_wrapper .bind_wrapper_content .bind_prompt_first{font-size: 24px;margin-top: 113px;margin-bottom: 99px;}
+    /*.bind_wrapper .bind_wrapper_content .no_prompt{margin-bottom: 35px;}*/
+    #bind_step1_btn{width: 150px;margin-bottom: 60px;}
+
+
+    .bind_wrapper .bind_wrapper_content .bind_success{margin-top: 20px;}
+    .bind_wrapper .bind_wrapper_content .bind_success .title{font-size: 24px;display: inline-block;margin-bottom: 10px;}
+    .bind_wrapper .bind_wrapper_content .bind_success .content{font-size: 16px;}
+    .bind_wrapper .bind_wrapper_content .bindSuccessImg,.bind_wrapper .bind_wrapper_content .bindErroImg{height: 165px;margin:30px 0;}
+    #bindSuccessBtn {width: 100px;margin-bottom: 40px;}
+
+    .bind_wrapper .bind_wrapper_content .bind_erro{font-size: 24px;margin-top: 20px;}
+    #reBind{width: 110px;margin-bottom: 40px;}
+
+    .viewFrameWork-body .body-content{
+      background: #f6f7fb;
+      height: 100%;
+      overflow: auto;
+    }
+    .c-block{
+      position: relative;
+    }
+    .viewFrameWork-body .body-wrapper .body-content{
+      background: #eff3f7;
+    }
+    .c-block .cont{
+      width: 900px;
+      background: #fff;
+      border: 1px solid #DEDEDE;
+      padding: 50px 90px;
+      margin: auto;
+    }
+    .c-block .cont .cont-left{
+      float: left;
+      position: relative;
+      width: 280px;
+      border-right: 1px solid #dedede;
+    }
+    #setUserForm{
+      float: left;
+      margin-left: 70px;
+    }
+    #setUserForm p{
+      margin-bottom: 30px;
+    }
+    #setUserForm p .t{
+      font-family: MicrosoftYaHei;
+      font-size: 16px;
+      color: #999999;
+    }
+    #setUserForm p .userInfoDom,.bind_state{
+      font-family: MicrosoftYaHei;
+      font-size: 16px;
+      color: #666666;
+    }
+    #setUserForm p .userUpdateDom{
+      font-family: MicrosoftYaHei;
+      font-size: 16px;
+      color: #999999;
+    }
+    .cont-left .username{
+      margin-top: 20px;
+    }
+    .cont-left p .userInfoDom{
+      font-family: MicrosoftYaHei;
+      font-size: 20px;
+      color: #666666;
+      display: block;
+      margin-top: 15px;
+      text-align: center;
+      width: 200px;
+    }
+    .cont-left p .userUpdateDom{
+      font-family: MicrosoftYaHei;
+      font-size: 20px;
+      color: #999999;
+    }
+
+    #picForm .userUpdateDom .c .upload{
+      font-family: MicrosoftYaHei;
+      font-size: 14px;
+      color: #1A8CFE;
+      background: #FFFFFF;
+      border: 1px solid #DEDEDE;
+      border-radius: 4px;
+      width: 90px;
+      height: 28px;
+      line-height: 28px;
+      position: absolute;
+      right: 79px;
+      bottom: 62px;
+      opacity: 0.5;
+    }
+    .input_default{
+      width: 291px;
+      height: 28px;
+      border: 1px solid #D8D8D8;
+      border-radius: 4px;
+    }
+    .btn_action_default{
+      display: inline-block;
+      width: 90px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      border: 1px solid #1A8CFE;
+      color:#1A8CFE !important;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 14px !important;
+    }
+
+    .modal-change-password{
+      z-index: 9999;
+      width:440px;
+      padding: 0;
+    }
+    .modal-change-password .modal-content{
+      padding: 0;
+      height:316px;
+    }
+    .modal-change-password .modal-content .modal-header{
+      height:auto;
+      padding-top:50px;
+      padding-bottom:0px;
+      border-bottom: unset;
+      text-align: center;
+    }
+    .modal-change-password .modal-content .modal-header .modal-title{
+      font-family: PingFangSC-Regular;
+      font-size: 20px;
+      color: #27274A;
+      letter-spacing: -0.46px;
+    }
+    .modal-change-password .modal-content .modal-body{
+      padding: 18px 50px 14px 50px;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_content{
+      text-align: right;
+      padding-right:20px;/*70-50*/
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_content>li{
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_content>li .erro_warning{
+      font-family: MicrosoftYaHei;
+      font-size: 12px;
+      color: #FF0000;
+      display: inline-block;
+      position: absolute;
+      top: 9px;
+      right: 10px;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_content>li .password_default{
+      display: inline-block;
+      width: 220px;
+      height: 34px;
+      border: 1px solid #DCDFE6;
+      border-radius: 4px;
+      padding-left: 10px;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_content>li .password_default::-webkit-input-placeholder{
+      font-family: MicrosoftYaHei;
+      font-size: 12px;
+      color: #999999;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_content>li label{
+      font-family: MicrosoftYaHei;
+      font-size: 14px;
+      color: #666666;
+      letter-spacing: -0.4px;
+      font-weight: normal;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_footer{
+      text-align: center;
+      margin-top: 34px;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_footer .footer_btn{
+      display: inline-block;
+      width: 100px;
+      height: 34px;
+      line-height: 34px;
+      border-radius: 4px;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_footer .btn_cancel{
+      background: #F2F2F2;
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      color: #666666;
+      letter-spacing: 2px;
+      margin-right: 15px;
+    }
+    .modal-change-password .modal-content .modal-body .wrapper_footer .btn_save{
+      background: #1A8CFE;
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      color: #FFFFFF;
+      letter-spacing: 2px;
+      border-radius: 4px;
+    }
+    .x-user{
+      width: 200px;
+      border: 1px solid #d8d8d8;
+      border-radius: 4px;
+      display: inline-block;
+      text-align: center;
+    }
+    #updateBtn .icon{
+      margin-right: 5px;
+    }
+    /*个人信息样式优化*/
+    .body-wrapper,.body-content,.c-block,.cont.clearfix{
+      height:100%;
+      width:100%;
+    }
+    .cont-left{
+      border-right:unset!important;
+      float: unset!important;
+      position: unset!important;
+      width: unset!important;
+      text-align: center!important;
+    }
+    .username{
+      text-align: center!important;
+      margin-bottom:50px!important;
+    }
+    .username .c.userInfoDom{
+      font-family: PingFangSC-Medium!important;
+      font-size: 26px!important;
+      color: #27274A!important;
+    }
+    .c.userInfoDom{
+      width: 100%!important;
+    }
+    #setUserForm {
+      width: 400px;
+      text-align: left;
+      display: inline-block;
+      margin-left: calc(50% - 160px); /*400/2再微调*/
+    }
+    #setUserForm p .t{
+      font-family: PingFangSC-Regular!important;
+      font-size: 16px!important;
+      color: #27274A!important;
+    }
+    #staffPic{
+      width:140px!important;
+      height:140px!important;
+      border: 1px solid #979797!important;
+      border-radius: 100%;
+    }
+    /*ksx-success*/
+    .ksx-success{
+      width:300px;
+      height:40px;
+      margin-top: 20px;
+      left:50%;
+      display:none;
+    }
+    .ksx-success .text{
+      font-family: PingFangSC-Medium;
+      font-size: 14px;
+      color: #1DC88C;
+      background: rgba(29,200,140,0.10);
+      border: 1px solid rgba(29,200,140,0.20);
+      border-radius: 4px;
+      width:100%;
+      height:100%;
+      line-height: 38px;
+    }
+    .set_success{
+      margin-right:12px;
+    }
+
+    .phone_error_tip{
+      position: absolute;
+      left: 147px;
+      color: red;
+    }
+    .old_phone_input{
+      color:#a9a9a9;
+    }
+    /*微信绑定弹窗样式优化*/
+    #bindModal .modal-dialog{
+      width:440px;
+      height:215px;
+    }
+    #bindModal .modal-content{
+      width:100%;
+      height:100%;
+    }
+    #bindModal .modal-header{
+      border-bottom:unset;
+      font-family: PingFangSC-Regular;
+      font-size: 20px;
+      color: #27274A;
+      letter-spacing: 0;
+      text-align: center;
+      line-height:unset;
+      padding:0;
+      margin:50px 0 0 0;
+      height: unset;
+    }
+    #bindModal .bind_prompt.bind_prompt_first{
+      padding-top:18px;
+      padding-bottom: 32px;
+      margin:0;
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      color: #999999;
+      letter-spacing: 0;
+      text-align: center;
+    }
+    #bindModal .btn_bind{
+      background: #1A8CFE;
+      border-radius: 4px;
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+    /*上传头像样式优化*/
+    .userUpdateDom{
+      position:relative;
+    }
+    .userUpdateDom .upload{
+      position:absolute!important;
+      right:0!important;
+      margin:auto;
+      top: -25px;
+      bottom: 0px!important;
+      left: 0px!important;
+      opacity: 0.9!important;
+      z-index: 1000!important;
+    }
+    /*保存按钮*/
+    .save_info_btn_container{
+      display:none;
+    }
+  </style>
+</head>
+<body>
+<div id="index">
+</div>
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+  <div class="modal-dialog modal-change-password" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">修改密码</h4>
+      </div>
+      <div class="modal-body">
+        <form name="form" method="post" id="setPwdForm" action="">
+          <ul class="wrapper_content">
+            <li>
+              <label>原密码：</label>
+              <input type="password" class="password_default" id="oldPassword" name="oldPassword" placeholder="请输入原密码">
+              <span class="erro_warning" id="wrong_old" style="display: none">密码输入错误</span>
+            </li>
+            <li>
+              <label>新密码：</label>
+              <input type="password" class="password_default" id="newPassword" name="newPassword" placeholder="密码为6-20位数字、字母或符号组合">
+              <span class="erro_warning" id="wrong_new" style="display: none">新密码不符合规则</span>
+            </li>
+            <li>
+              <label>确认密码：</label>
+              <input type="password" class="password_default" id="reNewPassword" name="reNewPassword" placeholder="请再次输入新密码">
+              <span class="erro_warning" id="erro_diff" style="display: none">两次密码输入不一致</span>
+            </li>
+          </ul>
+          <div class="wrapper_footer">
+            <a href="" class="footer_btn btn_cancel" data-dismiss="modal" style="text-decoration: none">关闭</a>
+            <a href="" class="footer_btn btn_save" id="savePasswordBtn" style="text-decoration: none">确定</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="checkPhoneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-check-phone" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">验证原手机号</h4>
+      </div>
+      <div class="modal-body">
+        <form name="form" method="post" id="checkPhoneForm" action="">
+          <ul class="wrapper_content">
+            <li>
+              <label>原手机号：</label>
+              <input type="text" class="password_default old_phone_input" value="" readonly="" name="phone" autocomplete="">
+            </li>
+            <li>
+              <label>验证码：</label>
+              <input type="text" class="password_default" oninput="value=value.replace(/[^\d]/g,'')" name="verifyCode">
+              <label class="get_vcode">获取验证码</label>
+            </li>
+            <span class="erro_warning phone_error_tip" id="old_phone_error_tip" style="display: none"></span>
+          </ul>
+          <div class="wrapper_footer">
+            <a href="javascript:void(0);" class="footer_btn btn_cancel" data-dismiss="modal" style="text-decoration: none">关闭</a>
+            <a href="javascript:void(0);" class="footer_btn btn_save" id="toBindPhone" style="text-decoration: none">下一步</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="bindNewPhoneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-bind-phone" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">绑定新手机号</h4>
+      </div>
+      <div class="modal-body">
+        <form name="form" method="post" id="bindNewPhoneForm" action="">
+          <ul class="wrapper_content">
+            <li>
+              <label>新手机号：</label>
+              <input type="text" class="password_default" oninput="value=value.replace(/[^\d]/g,'')" maxlength="11" name="phone" placeholder="请输入11位手机号">
+            </li>
+            <li>
+              <label>验证码：</label>
+              <input type="text" class="password_default" oninput="value=value.replace(/[^\d]/g,'')" name="verifyCode">
+              <label class="get_vcode">获取验证码</label>
+            </li>
+            <span class="erro_warning phone_error_tip" id="new_phone_error_tip" style="display: none"></span>
+          </ul>
+          <div class="wrapper_footer">
+            <a href="javascript:void(0);" class="footer_btn btn_cancel" id="cancelBtn_pass" data-dismiss="modal" style="text-decoration: none">关闭</a>
+            <a href="javascript:void(0);" class="footer_btn btn_save" id="bindNewPhoneBtn" style="text-decoration: none">确认</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login?nextUrl=" + window.location.href
+  }
+</script>
+  <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+  <script src="http://malsup.github.com/jquery.form.js"></script>
+  <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+</body>
+</html>

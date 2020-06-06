@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="在线考试系统,网络考试系统,企业考试系统,在线考试平台,手机考试,移动考试">
+    <meta name="description" content="爱考星是一款免费,好用在线考试系统,可以用手机考试,支持多种客户端">
+    <meta name="author" content="">
+    <title>考试系统</title>
+    <link rel="shortcut icon" href="/static/images/logo.jpg">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+    <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+    <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+    <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootgrid/jquery.bootgrid.css?v=34bb33548057">
+    <link rel="stylesheet" type="text/css" href="https://s5.kaoshixing.com/static/plugins/introjs/introjs.css?v=70a20b618157">
+    <link rel="stylesheet" href="https://s1.kaoshixing.com/static/admin/css/paper_update.css?v=679f485fc8">
+    <script type="text/javascript" src="https://ykf-webchat.7moor.com/javascripts/7moorInit.js?accessId=6b954fd0-287a-11ea-a51a-f5489a017c96&amp;autoShow=false&amp;language=ZHCN" async="async">
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/plugins/katex/katex.min.css?v=27f0bd8419">
+    <script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/katex/katex.min.js?v=c158c9e823"></script>
+    <script type="text/javascript" src="https://s4.kaoshixing.com/static/plugins/katex/contrib/auto-render.min.js?v=28cd0b98cd"></script>
+    <script type="text/javascript">
+      // 解析latex公式
+      function renderFormula(selector, flag){ //flag预留，以备用于区分不同处理
+        $(selector).each(function (index, element) {
+          if(!$(element).hasClass("rendered")){
+            var text = $(element).text();
+
+            katex.render(text, element, {
+              throwOnError: false
+            });
+
+            $(element).addClass("rendered");
+          }
+        });
+      }
+    </script>
+
+
+    <style type="text/css">  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: col-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style><link type="text/css" rel="stylesheet" href="//ykf-webchat.7moor.com//stylesheets/chatStyle.css?0620"><style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+  @keyframes caretBlink {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+  }
+
+  @keyframes rotateSpinner {
+    from {
+      transform:rotate(0deg);
+    }
+    to {
+      transform:rotate(360deg);
+    }
+  }
+
+  #text-tool-caret {
+    animation-name: caretBlink;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+    animation-duration: 1s;
+  }
+
+  #en-markup-loading-spinner {
+    position: absolute;
+    top: calc(50% - 16px);
+    left: calc(50% - 16px);
+    width: 32px;
+    height: 32px;
+  }
+
+  #en-markup-loading-spinner img {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    animation-name: rotateSpinner;
+    animation-duration: 0.6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  </style><style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+  .skitchToastBoxContainer {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    pointer-events: none;
+  }
+
+  .skitchToastBox {
+    width: 200px;
+    height: 16px;
+    padding: 12px;
+    background-color: rgba(47, 55, 61, 0.95);
+    border-radius: 4px;
+    color: white;
+    cursor: default;
+    font-size: 10pt;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.32);
+    font-family: 'Soleil', Helvetica, Arial, sans-serif;
+    border: 2px rgba(255, 255, 255, 0.38) solid;
+  }
+
+  .lang-zh-cn .skitchToastBox {
+    font-family: '微软雅黑', 'Microsoft YaHei', SimSun,
+    '&#x30E1;&#x30A4;&#x30EA;&#x30AA;', Meiryo, 'MS PGothic', 'Soleil',
+    Helvetica, Arial, sans-serif;
+  }
+
+  .lang-ja-jp .skitchToastBox {
+    font-family: '&#x30E1;&#x30A4;&#x30EA;&#x30AA;', Meiryo, 'MS PGothic',
+    '微软雅黑', 'Microsoft YaHei', SimSun, 'Soleil', Helvetica, Arial,
+    sans-serif;
+  }
+
+  .skitchToast {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: inline-block;
+    height: 10px;
+    color: #f1f5f8;
+    text-align: center;
+  }
+
+  .skitchVisible {
+    /* Don't remove this class it's a hack used by the Evernote Clipper */
+  }
+  </style><style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
+
+  @font-face {
+    font-family: 'Soleil';
+    font-weight: normal;
+    font-style: normal;
+  }
+  </style><style type="text/css">/* Copyright 2019-present Evernote Corporation. All rights reserved. */
+
+  #en-markup-disabled {
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    cursor: default;
+    -webkit-user-select: none;
+  }
+
+  #en-markup-alert-container {
+    position: absolute;
+    z-index: 9999;
+    width: 450px;
+    left: calc(50% - 225px);
+    top: calc(50% - 85px);
+    background-color: white;
+    box-shadow: 0 2px 7px 1px rgba(0,0,0,0.35);
+    -webkit-user-select: none;
+  }
+
+  #en-markup-alert-container .cell-1 {
+    position: relative;
+    height: 110px;
+    width: 105px;
+    float: left;
+    text-align: center;
+    background-position: 65% 50%;
+    background-repeat: no-repeat;
+  }
+
+  #en-markup-alert-container .cell-2 {
+    position: relative;
+    float: left;
+    width: 345px;
+    margin-top: 29px;
+    margin-bottom: 20px;
+  }
+
+  #en-markup-alert-container .cell-2 .cell-2-title {
+    margin-bottom: 5px;
+    padding-right: 30px;
+    font-size: 12pt;
+    font-family: Tahoma, Arial;
+  }
+
+  #en-markup-alert-container .cell-2 .cell-2-message {
+    padding-right: 30px;
+    font-size: 9.5pt;
+    font-family: Tahoma, Arial;
+  }
+
+  #en-markup-alert-container .cell-3 {
+    position: relative;
+    width: 450px;
+    height: 60px;
+    float: left;
+    background-color: rgb(240,240,240);
+  }
+
+  #en-markup-alert-container .cell-3 button {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    width: 110px;
+    height: 36px;
+  }
+
+  #en-markup-alert-container .cell-3 button.alt-button {
+    position: absolute;
+    top: 12px;
+    right: 140px;
+    width: 110px;
+    height: 36px;
+  }
+  </style>
+  </head>
+    <body>
+      <div id="index"></div>
+      <div class="modal fade" id="questionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-large" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">选择试题</h4>
+
+              <span class="add-quest">
+                            <span class="icon-a_btn_add"></span>
+                            添加试题
+                        </span>
+
+            </div>
+            <div class="modal-body">
+              <iframe width="100%" height="660px" name="selQuestionFrame" id="selQuestionFrame"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="addQuestionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-large modal-iframe" role="document" style="width: 1240px;margin-left: -613px;max-height: 674px;">
+          <span class="icon-a_close close-x" data-dismiss="modal"></span>
+          <iframe width="100%" height="100%" name="publicQuestion" id="publicQuestion"></iframe>
+        </div>
+      </div>
+
+      <div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-small" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title model-exam-classify">选择试卷分类</h4>
+            </div>
+            <div class="modal-body">
+              <iframe width="100%" height="518px" name="selTypeModal" id="selTypeModal"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="difficultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 9999; display: none;">
+        <div class="modal-dialog" role="document" style="margin-top:200px;width: 440px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">添加试题</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>试题分类：</label>
+                <a href="#" id="selTypeLink">请选择</a>
+                <input type="hidden" class="" name="classification" value="">
+              </div>
+
+
+
+
+              <div class="form-group" style="margin-left: 20px;">
+                <label>选题方式：</label>
+                <div class="setDifficultContent">
+                  <p>
+                    简单
+                    <input type="text" class="difficult" name="difficult1" autocomplete="off" value="0">
+                    /
+                    <span class="difficult1_num">0</span>
+                    &nbsp;&nbsp;&nbsp;
+                  </p>
+                  <p>
+                    普通
+                    <input type="text" class="difficult" name="difficult2" autocomplete="off" value="0">
+                    /
+                    <span class="difficult2_num">0</span>
+                    &nbsp;&nbsp;&nbsp;
+                  </p>
+                  <p>
+                    困难
+                    <input type="text" class="difficult" name="difficult3" autocomplete="off" value="0">
+                    /
+                    <span class="difficult3_num">0</span>
+                    &nbsp;&nbsp;&nbsp;
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" id="cancelEndBtn" data-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary" id="saveTextBtn">确认</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="questionsTypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 99999;">
+        <div class="modal-dialog modal-small" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">选择试题分类</h4>
+            </div>
+            <div class="modal-body">
+              <iframe width="100%" height="518px" name="selQuestionsTypeModal" id="selQuestionsTypeModal">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="savePaperModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 99999;">
+        <div class="modal-dialog modal-small" role="document" style="width:440px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="icon-a_success"></span>
+
+              <h4 class="modal-title">试卷保存成功</h4>
+            </div>
+            <div class="modal-body">
+              <span>试卷保存成功，是否使用此试卷去创建一场考试？</span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" id="paperList">查看试卷</button>
+              <button type="button" class="btn btn-primary" id="createExam">去创建考试</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+      <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+      <script type="text/javascript" src="https://s4.kaoshixing.com/static/plugins/bootgrid/jquery.bootgrid-ksx.js?v=c7e1e8fb5957"></script>
+      <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+      <script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/colResizable-1.6.min.js?v=35fe38869557"></script>
+      <script src="https://s4.kaoshixing.com/static/plugins/createdPicture/html2canvas.js?v=418889293e"></script>
+      <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+      <script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/clipboard/clipboard.min.js?v=3e5e0fa94957"></script>
+      <script>
+        var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+        var now = new Date()
+        var year = now.getFullYear().toString()
+        var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+        var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+        var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+        var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+        var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+        var nowTime = year+month+date+hour+minute+second
+        if(nowTime - expireTime >= -10){
+          window.location.href = "/admin/login?nextUrl=" + window.location.href
+        }
+      </script>
+      <script>
+        function getQuery(name) {
+          var reg = new RegExp('(^[?]?|&)' + name + '=([^&]*)(&|$)', 'i');
+          var r = window.location.href.split("?")[1].match(reg);
+          if (r != null) {
+            return unescape(r[2]);
+          }
+          return '';
+        }
+        user = JSON.parse(window.localStorage.getItem("USER"))
+        // these are global constant
+        var LOCAL_URL = window.location.href;
+        var USER_ROLE = 'admin';
+        var rights='8';
+        var surname=user.userName;
+        var adjust_t,adjust_l;//对引导层位置进行调整的两个变量
+        var tool_html='';//消息内容
+        var tool_count=0;//消息数目
+        var user_id=user.userId;
+        var labelOpen = 'false';
+        var userRole = 'admin';
+        var paperInfoId = window.location.href.split("#/")[1].split("?")[0];
+        var sourceFrom = getQuery('sourceFrom');
+        var examInfoId = getQuery("examInfoId");
+      </script>
+    </body>
+</html>

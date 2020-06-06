@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+  <title>考试系统</title>
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/froala_editor/css/froala_editor.pkgd.min.css?v=e4a2f45bc957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/froala_editor/css/froala_style.min.css?v=5991575c8357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/plugins/tagsinput/bootstrap-tagsinput.css?v=cff80600de57">
+  <link type="text/css" href="https://s3.kaoshixing.com/static/plugins/bootstrapSwitch/css/bootstrapSwitch.css?v=4ec8012bf657" rel="stylesheet">
+  <link rel="stylesheet" href="https://s3.kaoshixing.com/static/plugins/honeySwitch/honeySwitch.css?v=fad37c172157">
+  <link rel="stylesheet" href="https://s5.kaoshixing.com/static/plugins/wangEditor/css/wangEditor.min.css?v=79e846c19057">
+  <link rel="stylesheet" href="https://s5.kaoshixing.com/static/plugins/wangEditor/css/wangEditor-custom.css?v=45053d7f1557">
+  <link rel="stylesheet" type="text/css" href="https://s5.kaoshixing.com/static/admin/css/question_add.css?v=2ce3a4731a57">
+  <link rel="stylesheet" type="text/css" href="https://s3.kaoshixing.com/static/base/css/ksx-tab-base.css?v=05b914cf4a">
+  <style type="text/css">
+    .JColResizer {
+    table-layout: fixed;
+  }
+
+  .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th {
+    overflow: hidden;
+  }
+
+  .JCLRgrips {
+    height: 0px;
+    position: relative;
+  }
+
+  .JCLRgrip {
+    margin-left: -5px;
+    position: absolute;
+    z-index: 5;
+  }
+
+  .JCLRgrip .JColResizer {
+    position: absolute;
+    background-color: red;
+    filter: alpha(opacity=1);
+    opacity: 0;
+    width: 10px;
+    height: 100%;
+    cursor: col-resize;
+    top: 0px
+  }
+
+  .JCLRLastGrip {
+    position: absolute;
+    width: 1px;
+  }
+
+  .JCLRgripDrag {
+    border-left: 1px dotted black;
+  }
+
+  .JCLRFlex {
+    width: auto !important;
+  }
+
+  .JCLRgrip.JCLRdisabledGrip .JColResizer {
+    cursor: default;
+    display: none;
+  }
+  </style>
+  <style>
+    .el-tooltip__popper {
+      position: absolute;
+      border-radius: 4px;
+      padding: 10px;
+      z-index: 2000;
+      font-size: 12px;
+      line-height: 1.2;
+      min-width: 10px;
+    }
+    .el-tooltip__popper.is-dark {
+      background: #303133;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div id="index">
+</div>
+<form id="asyncForm" style="display: none">
+  <input type="hidden" name="id" value="">
+  <input type="hidden" name="classification" value="">
+  <input type="hidden" name="label" value="">
+  <input type="hidden" name="type" value="1">
+  <input type="hidden" name="tab_num" value="">
+  <input type="hidden" name="status" value="enable">
+  <input type="hidden" name="difficult" value="">
+  <input type="hidden" name="encrypt" value="">
+  <input type="hidden" name="normalWords" value="">
+  <input type="hidden" name="keyWords" value="">
+  <input type="hidden" name="disorder" value="1">
+  <textarea name="question"></textarea>
+  <textarea name="analysis"></textarea>
+  <textarea name="rawAnalysis"></textarea>
+  <textarea name="rawQuestion"></textarea>
+  <textarea name="answer1"></textarea>
+  <textarea name="rawAnswer"></textarea>
+  <div></div>
+</form>
+<script>
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login?nextUrl=" + window.location.href
+  }
+</script>
+  <script src="/static/common/plugins/aliyun/dist/aliyun-sdk.min.js"></script>
+  <script src="/static/common/js/oss-js-upload.js"></script>
+  <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+  <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/froala_editor/js/froala_editor.pkgd.min.js?v=20e89f64e257"></script>
+  <script type="text/javascript" src="https://s0.kaoshixing.com/static/plugins/froala_editor/js/languages/zh_cn.js?v=25f4cb2559"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+  <script src="https://s1.kaoshixing.com/static/plugins/bootstrapSwitch/js/bootstrapSwitch.js?v=14492d972557"></script>
+  <script type="text/javascript" src="https://s2.kaoshixing.com/static/plugins/tagsinput/bootstrap-tagsinput.js?v=ddf1c77c4257"></script>
+  <script src="https://s5.kaoshixing.com/static/plugins/honeySwitch/honeySwitch.js?v=94e23bd13c57"></script>
+  <script src="/static/common/plugins/wangEditor/js/wangEditor.js"></script>
+  <script src="/static/common/plugins/wangEditor/js/fileUpload.js"></script>
+  <script src="/static/common/plugins/wangEditor/js/mediaUpload.js"></script>
+  <script type="text/javascript" src="https://s1.kaoshixing.com/static/admin/js/auto-line-number.js?v=1c091edf9257"></script>
+  <script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/markdown-v1.0.js?v=2d6af6d83157"></script>
+</body>
+</html>

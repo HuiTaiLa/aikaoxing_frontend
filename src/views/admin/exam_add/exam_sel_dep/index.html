@@ -1,0 +1,408 @@
+<html><head>
+  <meta charset="utf-8">
+  <title>考试系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="shortcut icon" href="/static/images/logo.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/modal_content_style.css?v=dc8373ade357">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/plugins/ztree/css/zTreeStyle/zTreeStyle.css?v=63af70951757">
+  <link rel="stylesheet" type="text/css" href="https://s3.kaoshixing.com/static/admin/css/customer.css?v=a709fda1f757">
+  <style>
+    .setRigth .setRigthContent {
+      margin: 0 10px 10px 30px;
+    }
+    .setRigthContent .title {
+      height: 20px;
+      line-height: 20px;
+    }
+    #closeBtn,#closeBtn:hover{
+      background-color: #1A8CFE;
+      width: 100px;
+      height: 34px;
+      font-size: 12px;
+      border-radius: 4px;
+      line-height: 34px;
+      padding: 0;
+      color: #666666;
+      background: #f2f2f2;
+    }
+    #saveBtn,#saveBtn:hover {
+      background-color: #1A8CFE;
+      width: 100px;
+      height: 34px;
+      font-size: 12px;
+      border-radius: 4px;
+      line-height: 34px;
+      padding: 0;
+      color: #ffffff;
+      background: #1A8CFE;
+    }
+    .filterInput{
+      -webkit-appearance: none;
+      background-color: #fff;
+      background-image: none;
+      border-radius: 4px;
+      border: 1px solid #dcdfe6;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      color: #606266;
+      display: inline-block;
+      font-size: inherit;
+      height: 40px;
+      line-height: 40px;
+      outline: 0;
+      padding: 0 15px;
+      -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+      transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+      width: 100%;
+      height: 28px;
+      line-height: 28px;
+    }
+    .filterInput::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: #c0c0c0;
+    }
+    .filterInput::-moz-placeholder { /* Firefox 19+ */
+      color: #c0c0c0;
+    }
+    .filterInput:-ms-input-placeholder { /* IE 10+ */
+      color: #c0c0c0;
+    }
+    .filterInput:-moz-placeholder { /* Firefox 18- */
+      color: #c0c0c0;
+    }
+  </style>
+</head>
+
+<body>
+<div class="setRigth">
+  <div class="setRigthContent">
+    <form action="" name="form" method="post" id="subForm">
+      <div class="topSelDiv">
+        <input type="text" class="filterInput" placeholder="请输入关键字进行过滤" oninput="AutoMatch(this)">
+        <ul id="treeDemo" class="ztree">
+
+        </ul>
+      </div>
+      <div class="buttonP">
+        <a class="button" href="#" id="closeBtn">关闭</a>
+        <a class="button" href="#" id="saveBtn">选择</a>
+      </div>
+      <input name="user_ids" value="" type="hidden">
+      <input name="dep_id" value="" type="hidden">
+    </form>
+  </div>
+</div>
+
+
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+<script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+<script type="text/javascript">
+  (function ($) {
+    $(document).ready(function() {
+      if ($.isFunction($.bootstrapIE6)) $.bootstrapIE6($(document));
+    });
+  })(jQuery);
+</script>
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/ztree/js/jquery.ztree.all-3.5.min.js?v=671f5f9b0457"></script>
+<script type="text/javascript" src="https://s0.kaoshixing.com/static/admin/js/admin_main.js?v=a2964f524757"></script>
+<script>
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login"
+  }
+</script>
+<script type="text/javascript">
+  $.ajaxSetup({
+    contentType:"application/x-www-form-urlencoded;charset=utf-8",
+    headers:{
+      Authentication:JSON.parse(window.localStorage.getItem("USER_TOKEN"))
+    },
+    statusCode: {
+      404: function() {
+        window.location.href="/admin/error/404";
+      },
+      504: function() {
+        window.location.href="/admin/error/default";
+      },
+      500: function() {
+        window.location.href="/admin/error/default";
+      },
+      429:function () {
+        alert("您操作过于频繁！");
+      },
+      401:function () {
+        window.location.href="/admin/error/401";
+      },
+      400:function () {
+        window.location.href="/admin/error/400";
+      },
+      403:function () {
+        window.location.href="/admin/error/403";
+      },
+    }
+  });
+
+  var user = JSON.parse(window.localStorage.getItem("USER"));
+
+  var role ="";
+  var treeData; //全部树数据 当模糊搜索关键字为空的时候，加载该数据
+  var setting = {
+    view: {
+      selectedMulti: false
+    },
+    check:{
+      enable:true,
+      chkboxType: { "Y" : "s", "N" : "s" },
+      autoCheckTrigger: true //为了让某节点取消勾选，其所有子节点也能触发onCheck事件
+    },
+    edit: {
+      enable: false,
+      editNameSelectAll: true
+    },
+    data: {
+      simpleData: {
+        enable: true
+      }
+    },
+    callback: {
+      onCheck: zTreeOnCheck,
+    }
+  };
+
+  var zNodes =[
+    /*{ id:1, pId:0, name:"父节点 1", open:true},
+     { id:11, pId:1, name:"叶子节点 1-1"},
+     { id:12, pId:1, name:"叶子节点 1-2"},
+     { id:13, pId:1, name:"叶子节点 1-3"},
+     { id:2, pId:0, name:"父节点 2", open:true},
+     { id:21, pId:2, name:"叶子节点 2-1"},
+     { id:22, pId:2, name:"叶子节点 2-2"},
+     { id:23, pId:2, name:"叶子节点 2-3"},
+     { id:3, pId:0, name:"父节点 3", open:true},
+     { id:31, pId:3, name:"叶子节点 3-1"},
+     { id:32, pId:3, name:"叶子节点 3-2"},
+     { id:33, pId:3, name:"叶子节点 3-3"}*/
+  ];
+  //	读取树数据
+  function loadTree(){
+    $.ajax({
+      type: "post",
+      cache : false,
+      headers: { "cache-control": "no-cache" },
+      dataType: "json",
+      url: "/api/dept/getDepartmentsJson",
+      data:"account="+user.account +"&companyId="+user.companyId,
+      success: function(msg){
+        zNodes = msg;
+        if(zNodes.success==true){
+//                    zNodes.shift();
+          //初始化树
+//				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+          var zTree=$.fn.zTree.init($("#treeDemo"), setting, zNodes.bizContent);
+          treeData = zNodes.bizContent;
+          var nodes = zTree.getNodes();
+          // for(var i=0;i<nodes.length;i++){
+          //     zTree.expandNode(nodes[i],true,true,true,true);
+          // }
+          zTree.expandAll(true); //使用遍历每个节点再expandNode的形式，会产生弹窗内容下滑，导致搜索框被隐藏。既然是要展开所有节点，所以直接调用插件接口expandAll（另外一种解决办法是expandNode第四个参数设为false,使得展开/折叠不设置焦点）
+          checkTreeNode(); //勾选
+        }else{
+          alert("读取数据失败，请联系管理员！");
+        }
+      }
+    });
+  }
+  loadTree();
+  //如果有已选类型进行勾选操作
+  function checkTreeNode(){
+    var selIds = $(parent.document).find("input[name=deptIds]").val();
+    if(selIds!=""){
+      var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+      var list = selIds.split(",");
+      //list.pop();
+      $.each(list,function(index, value){
+        var node = zTree.getNodeByParam("id", value, null);
+        if(node != null){
+          zTree.checkNode(node, true, false);
+        }
+      });
+    }
+  }
+  /*
+   //选择
+   $("#saveBtn").click(function(e) {
+   var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+   var nodes = zTree.getCheckedNodes(true);
+   var clickNodeChilds = nodes.length;
+   var ids = "";
+   var names = "";
+   if(clickNodeChilds===0){
+   //return ;
+   names = "选择部门"
+   parent.selGroup(ids , names);
+   parent.hideSelGroup();
+   return ;
+   }
+   for(i=0;i<clickNodeChilds;i++){
+   ids += nodes[i].id+",";
+   names += nodes[i].name+"；";
+   }
+   if(names.toString().length>20){
+   names = names.substr(0,20);
+   }
+   names = names+"...";
+   parent.selGroup(ids , names);
+   parent.hideSelGroup();
+   });
+   */
+  //选择
+  $("#saveBtn").click(function(e) {
+    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+    var nodes = zTree.getCheckedNodes(true);
+    var clickNodeChilds = nodes.length;
+    var ids = "";
+    var depsArray=new Array();
+    if(isFuzzyFilterStatus){ //模糊查询状态
+      for(i=0;i<clickNodeChilds;i++){
+        if(!isDepIdExisted(nodes[i].id, checkedDepArr)) { //原来没有被确定选择的id，才添加
+          if (i == clickNodeChilds - 1) {
+            ids += nodes[i].id;
+          } else {
+            ids += nodes[i].id + ",";
+          }
+          var depArray = new Array(nodes[i].id, nodes[i].name);
+          depsArray.push(depArray);
+        }
+      }
+      ids += ',' + checkedDepArr.join(",");
+      depsArray = depsArray.concat(checkedDepObjArr);
+      parent.selGroup(ids , depsArray);
+      parent.hideSelGroup();
+    }else{
+      for(i=0;i<clickNodeChilds;i++){
+        if(i==clickNodeChilds-1){
+          ids += nodes[i].id;
+        }else {
+          ids += nodes[i].id+",";
+        }
+        var depArray=new Array(nodes[i].id,nodes[i].name);
+        depsArray.push(depArray);
+      }
+      parent.selGroup(ids , depsArray);
+      parent.hideSelGroup();
+    }
+  });
+
+  $("#closeBtn").click(function(e) {
+    parent.hideSelGroup();
+  });
+
+  //模糊查询
+  var checkedDepArr = $(parent.document).find("input[name=deptIds]").val().split(","); //储存已经确定的可考部门，之后的勾选/取消部门后会在对数组进行更新，点击'选择'后会重新赋值到input[name=deptIds]
+  var checkedDepObjArr = getCheckedDepObjArr();//[id、name]形式的已经确定的可考部门数据，用来渲染元素
+  var isFuzzyFilterStatus = false;//是否处于模糊查询状态
+  if(window.parent.location.href.indexOf('/exam/update') == -1 && window.parent.location.href.indexOf('/exam_add') == -1){ //非考试添加或考试编辑时使用该树，移除搜索框
+    $(".filterInput").remove();
+  }
+  $("#subForm").keydown(function(event){ //解除form元素回车跳转
+    if(event.keyCode==13){
+      event.preventDefault();
+    }
+  })
+  function AutoMatch(txtObj) {
+    isFuzzyFilterStatus = false;
+    var zTree = $.fn.zTree.init($("#treeDemo"), setting, treeData);
+    if (txtObj.value.length > 0) {
+      isFuzzyFilterStatus = true; //处于模糊查询状态
+      var nodeList = zTree.getNodesByParamFuzzy("name", txtObj.value);
+      var ancestorsNodes = new Array(); //储存搜索出的节点的祖先
+      //将找到的nodelist节点更新至Ztree内
+      for(var i=0;i<nodeList.length;i++){ //获取祖先
+        getAncestorsNodes(nodeList[i], ancestorsNodes, nodeList);
+      }
+      nodeList = nodeList.concat(ancestorsNodes);
+      for(var i=0;i<nodeList.length;i++){ //去掉子节点
+        nodeList[i].children = null;
+      }
+      $.fn.zTree.init($("#treeDemo"), setting, nodeList);
+      setTimeout(function(){ //重新初始化树的时候会导致关键字输入框失去焦点，延迟一小段时间重新给予焦点
+        $(".filterInput").focus();
+      },300);
+    }
+    var nodes = zTree.getNodes();
+    zTree.expandAll(true);
+    checkTreeNode(); //勾选
+  }
+  function getAncestorsNodes(node, ancestorsNodes, nodeList){ //找出模糊查询出的节点的祖先，并显示出来 (为了跟vue的部门搜索效果一致)
+    var parentNode = node.getParentNode();
+    if(parentNode != null){ //迭代
+      var existThisNode = false;
+      for(var i=0;i<nodeList.length;i++){ //如果祖先节点不跟查询结果数组里的节点重复，加入数组。否则不加入，避免节点重复
+        if(nodeList[i].id == parentNode.id){
+          existThisNode = true;
+          break;
+        }
+      }
+      if(!existThisNode){ //如果已经重复，不进行下列遍历和添加
+        for(var i=0;i<ancestorsNodes.length;i++){ //如果祖先数组里没有新找出的祖先节点，加入数组。否则不加入，避免节点重复
+          if(ancestorsNodes[i].id == parentNode.id){
+            existThisNode = true;
+            break;
+          }
+        }
+        if(!existThisNode) { //如果不重复，节点加入祖先数组
+          ancestorsNodes.push(parentNode);
+        }
+      }
+      getAncestorsNodes(parentNode, ancestorsNodes, nodeList);
+    }
+  }
+  function zTreeOnCheck(event, treeId, treeNode){
+    if(!treeNode.checked && isFuzzyFilterStatus){ //模糊状态下取消勾选
+      for(var i = 0;i < checkedDepArr.length;i++){
+        if(treeNode.id == checkedDepArr[i]){
+          checkedDepArr.splice(i, 1); //取消勾选的，从数组移除
+          break;
+        }
+      }
+      for(var i = 0;i < checkedDepObjArr.length;i++){
+        if(treeNode.id == checkedDepObjArr[i][0]){
+          checkedDepObjArr.splice(i, 1); //取消勾选的，从数组移除
+          break;
+        }
+      }
+    }
+  }
+  function isDepIdExisted(id, checkedIds){
+    for(var i = 0;i < checkedIds.length;i++){
+      if(id == checkedIds[i]){
+        return true;
+      }
+    }
+    return false;
+  }
+  function getCheckedDepObjArr(){
+    var depsArray = new Array();
+    $(parent.document).find("#depName .label").each(function(){
+      var id = $(this).find(".depidItem").text();
+      var name = $(this).find(".depnameItem").text();
+      var depArray = new Array(id, name);
+      depsArray.push(depArray);
+    })
+    return depsArray;
+  }
+</script>
+
+
+</body></html>

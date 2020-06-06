@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="/static/images/logo.jpg" type="image/icon">
+  <title>考试系统</title>
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/bootstrap/css/bootstrap.min.css?v=9ed71d952357">
+  <link rel="stylesheet" type="text/css" href="https://s0.kaoshixing.com/static/base/css/admin_base.css?v=f61d1071b957">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/base/css/ksx-base.css?v=8c544f136f57">
+  <link rel="stylesheet" type="text/css" href="https://s1.kaoshixing.com/static/plugins/IconFont/css/styles.min.css?v=155b8a0f0957">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/plugins/examFont/style.css?v=5c580b66db57">
+  <link rel="stylesheet" href="https://s3.kaoshixing.com/static/plugins/honeySwitch/honeySwitch.css?v=fad37c172157">
+  <link rel="stylesheet" href="https://s3.kaoshixing.com/static/plugins/summernote-master/dist/summernote.css?v=20e8f65b8e57">
+  <link rel="stylesheet" href="https://s0.kaoshixing.com/static/base/css/modal_content_style.css?v=dc8373ade357">
+  <link rel="stylesheet" href="https://s0.kaoshixing.com/static/admin/css/exam_add.css?v=9993c8241e57">
+  <link rel="stylesheet" type="text/css" href="https://s2.kaoshixing.com/static/base/css/cannotlink_modal.css?v=ab38662ed857">
+  <link rel="stylesheet" type="text/css" href="https://s4.kaoshixing.com/static/admin/css/link_img_download.css?v=70ad0e7aae57">
+  <style>
+    .el-tooltip__popper {
+      position: absolute;
+      border-radius: 4px;
+      padding: 10px;
+      z-index: 2000;
+      font-size: 12px;
+      line-height: 1.2;
+      min-width: 10px;
+    }
+    .el-tooltip__popper.is-dark {
+      background: #303133;
+      color: #fff;
+    }
+  </style>
+  <style>
+    .exam-setting.normal-setting .form-group label.setProcess{
+      width: 130px;
+    }
+    input[name=joinStatus]{
+      cursor: pointer;
+    }
+    .more_settings_split{
+      height: 20px;
+      background-color: #eff3f7;
+    }
+    .exam-setting.normal-setting{
+      border-bottom:unset;
+    }
+    .exam-setting.toolbar-setting a{
+      font-size: 16px;
+      color: #27274A;
+      text-align: center;
+      font-weight: bold;
+    }
+    .exam-setting.toolbar-setting .glyphicon{
+      color:#C1C1CB;
+      margin-right: unset;
+      margin-left:5px;
+      font-size:10px;
+      top: unset;
+    }
+    /*免登录设置样式优化*/
+    #loginModal .modal-dialog{
+      height: calc(100% - 100px);
+      width: 600px;
+    }
+    #loginModal .modal-header{
+      border:unset;
+    }
+    #loginModal .modal-content{
+      height: 100%;
+    }
+    #loginModal .modal-body{
+      height: calc(100% - 54px);
+    }
+    #loginModal .modal-body iframe{
+      height:100%;
+    }
+
+    #selDeptModal,#selTargetDepModal {
+      display: none;
+      width: 300px;
+      background-color: #fff;
+      position: absolute;
+      z-index: 20000;
+      border: 1px gainsboro solid !important;
+    }
+    /*禁止高亮区点击*/
+    #threeCreateExam1.introjs-showElement,
+    #threeCreateExam2.introjs-showElement,
+    #threeCreateExam3.introjs-showElement,
+    #threeCreateExam4.introjs-showElement{
+      pointer-events: none;
+      cursor: default;
+      z-index: 99999999;
+    }
+    #threeCreateExam4{
+      width: 100px;
+      height: 34px;
+      position: fixed;
+      top: 18px;
+      right: 130px;
+      z-index: 99999;
+    }
+  </style>
+  <link type="text/css" rel="stylesheet" href="https://s1.kaoshixing.com/static/plugins/laydate/need/laydate.css">
+  <link type="text/css" rel="stylesheet" href="https://s1.kaoshixing.com/static/plugins/laydate/skins/default/laydate.css" id="LayDateSkin">
+</head>
+<body>
+<div id="index">
+</div>
+<div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+  <div class="modal-dialog modal-small" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">选择考试分类</h4>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="518px" name="selTypeModal" id="selTypeModal"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+  <div class="modal-dialog modal-small" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">指定考试部门</h4>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="518px" name="selGroupModal" id="selGroupModal"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+  <div class="modal-dialog modal-large modal-iframe" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">指定特定学员</h4>
+      </div>
+      <div class="modal-body">
+        <iframe width="100%" height="100%" name="selUserModal" id="selUserModal"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="okModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+  <div class="modal-dialog modal-share" role="document">
+
+
+
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="left_container">
+
+
+          <div class="linkImgDownLoad">
+            <div class="content">
+              <div class="logo">
+                <img class="icon-logo logo-ksx" src="/static/images/logo.jpg"></div>
+              <div class="title currentThemeBackgroundColor">
+                <div class="title_container">
+                  <div class="invite"><div class="white_line"></div>邀请你参加<span class="activity_type"></span><div class="white_line"></div></div>
+                  <div class="title_content"></div>
+                </div>
+              </div>
+              <div class="time">
+                <div class="start_time">开始时间：<span></span></div>
+                <div class="end_time">结束时间：<span></span></div>
+                <div class="exam_time">考试时长：<span></span></div>
+              </div>
+              <div class="qr_code">
+                <div class="code_img"><canvas width="150" height="150"></canvas></div>
+                <div class="tip">识别二维码参加<span class="activity_type"></span></div>
+              </div>
+            </div>
+            <div class="half_circle left"></div>
+            <div class="half_circle right"></div>
+            <div class="left_triangle"></div>
+            <div class="right_triangle"></div>
+          </div>
+
+        </div>
+        <div class="right_container">
+          <div class="link_title">考试链接</div>
+          <div class="guide">
+            <span class="address"><span class="tip_title link_tip_title">考试地址</span><div id="exam_url"></div></span>
+            <button type="button" data-clipboard-target="#exam_url" class="btn btn-default btn-copy link_copy_btn" id="copyUrlBtn"><i class="icon-a_operate_copy"></i>复制链接</button>
+          </div>
+          <div step="6" class="guide guide-pwd hidden">
+            <span class="address"><span class="tip_title">考试密码：</span><div id="exam_password"></div></span>
+            <button type="button" class="btn btn-default btn-copy" id="copyPasswordLink" data-clipboard-target="#exam_password"><i class="icon-a_operate_copy"></i>复制密码</button>
+          </div>
+          <form action="/examadmin/admin/exam_notice/" name="form" method="post" id="sendForm" class="sendForm hidden">
+            <span class="tip_title">发送考试通知</span>
+            <i class="help-tips">
+              ?
+              <div class="notificationTips">
+                <h4>什么是"发送考试通知"?</h4>
+                <p>将会发送考试的日期、时间、考试名称和考试链接给学员。支持对已验证邮箱的学员发送邮件,和对已预留手机号的学员发送短信,如无学员联系方式,将无法送达。发送短信时,第三方供应商将会收取一定的费用。<a href="/account/admin_pay_center">去充值-&gt;</a></p>
+                <div>
+                  <img src="https://s5.kaoshixing.com/static/admin/images/SMS_notification.png">
+                  <div class="notification">
+                    <p class="notificationContent"></p>
+                    <p class="notificationUrl"></p>
+                  </div>
+                </div>
+              </div>
+            </i>
+            <br>
+            <input name="sendEmail" type="checkbox" id="email" class="email" value="1">
+            邮件&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input name="sendMessage" type="checkbox" id="message" class="message" value="1">
+            短信
+
+          </form>
+          <div class="btn-div">
+            <div class="btn-group">
+              <a type="button" class="btn-download linkImgDownLoadBtn" download="下载.png" href="">
+                下载图片
+              </a>
+            </div>
+            <button class="btn btn-warning" id="trialExamBtn" disabled></button>
+            <button type="button" class="btn btn-primary btnOk" id="confirmOkBtn" data-dismiss="modal">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="linkImgDownLoad">
+  <div class="content">
+    <div class="logo">
+      <img class="icon-logo logo-ksx" src="/static/images/logo.jpg"></div>
+    <div class="title currentThemeBackgroundColor">
+      <div class="title_container">
+        <div class="invite"><div class="white_line"></div>邀请你参加<span class="activity_type"></span><div class="white_line"></div></div>
+        <div class="title_content"></div>
+      </div>
+    </div>
+    <div class="time">
+      <div class="start_time">开始时间：<span></span></div>
+      <div class="end_time">结束时间：<span></span></div>
+      <div class="exam_time">考试时长：<span></span></div>
+    </div>
+    <div class="qr_code">
+      <div class="code_img"><canvas width="150" height="150"></canvas></div>
+      <div class="tip">识别二维码参加<span class="activity_type">考试</span></div>
+    </div>
+  </div>
+  <div class="half_circle left"></div>
+  <div class="half_circle right"></div>
+  <div class="left_triangle"></div>
+  <div class="right_triangle"></div>
+</div>
+<script>
+  var expireTime = JSON.parse(window.localStorage.getItem("EXPIRE_TIME"))
+  var now = new Date()
+  var year = now.getFullYear().toString()
+  var month = (now.getMonth()+1).toString().length>1?(now.getMonth()+1).toString():"0"+(now.getMonth()+1).toString()
+  var date = now.getDate().toString().length>1?now.getDate().toString():"0"+now.getDate().toString()
+  var hour = now.getHours().toString().length>1?now.getHours().toString():"0"+now.getHours().toString()
+  var minute = now.getMinutes().toString().length>1?now.getMinutes().toString():"0"+now.getMinutes().toString()
+  var second = now.getSeconds().toString().length>1?now.getSeconds().toString():"0"+now.getSeconds().toString()
+  var nowTime = year+month+date+hour+minute+second
+  if(nowTime - expireTime >= -10){
+    window.location.href = "/admin/login?nextUrl=" + window.location.href
+  }
+</script>
+  <script type="text/javascript" src="https://s3.kaoshixing.com/static/base/js/jquery.min.js?v=8101d596b257"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap/js/bootstrap.min.js?v=87d37353ad57"></script>
+  <script type="text/javascript" src="https://s5.kaoshixing.com/static/plugins/bootstrap-dialog.min.js?v=0330ca558b57"></script>
+  <script src="https://s4.kaoshixing.com/static/plugins/createdPicture/html2canvas.js?v=418889293e"></script>
+  <script type="text/javascript" src="/static/common/js/admin-base.js"></script>
+  <script src="https://s2.kaoshixing.com/static/plugins/jquery.qrcode.min.js?v=043049667957"></script>
+  <script src="https://s1.kaoshixing.com/static/plugins/clipboard/clipboard.min.js?v=3e5e0fa94957"></script>
+<script>
+  //var hasUsing = "{{is_using}}";
+  var totalPoints = '1.0';
+  //试题数量
+  var questionCount_var = parseInt('1');
+  var userName = "18222261781@180731";
+  var domain = "180731";
+  var userId = 11564550;
+  var jwt = "{{ jwt_info }}";
+  var ksxCompanyId = "180731";
+
+  var shareTitle = "我参加了[考试名称]，得了[得分]分，你也来测测";
+  var sharePic = "http://file.kaoshixing.com/wx-logo.png";
+  var canOpenRedPack = false;
+  // 是否开启学员标签
+  var userLabelOpen = "0";
+  var skipLoginVal;
+  $('input[name=skipLogin]').change(function() {
+    skipLoginVal = $("input[name='skipLogin']:checked").val();
+  });
+
+         // $(function(){
+         //     var clip_course=new ZeroClipboard($("#copyUrlBtn"));
+         //     //复制链接
+         //     clip_course.on("ready", function(readyEvent) {
+         //         clip_course.on("aftercopy", function(event) {
+         //             alert("已复制链接：" + event.data["text/plain"]);
+         //         });
+         //     });
+         //     $("#copyUrlBtn").hover(
+         //         function(){
+         //             $("this").addClass("zeroclipboard-is-hover");
+         //         }, function(){
+         //             $("this").removeClass("zeroclipboard-is-hover");
+         //         }
+         //     );
+         // })
+</script>
+<!--<script src="https://s5.kaoshixing.com/static/plugins/honeySwitch/honeySwitch.js?v=94e23bd13c57"></script>-->
+<script type="text/javascript" src="https://s3.kaoshixing.com/static/plugins/summernote-master/dist/summernote.js?v=9f67aaa3ca57"></script>
+<script src="https://s1.kaoshixing.com/static/plugins/summernote-master/dist/lang/summernote-zh-CN.js?v=9c8967145557"></script>
+<script type="text/javascript" src="https://s1.kaoshixing.com/static/plugins/laydate/laydate.js?v=aca8f98a2e57"></script>
+
+</body>
+</html>
